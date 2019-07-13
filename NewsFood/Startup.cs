@@ -6,6 +6,7 @@ using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.HttpsPolicy;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Routing;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
@@ -14,6 +15,7 @@ using Microsoft.Extensions.Options;
 using NewFood.Data.DataContext;
 using NewsFood.Application;
 using NewsFood.Core.Repository;
+using Swashbuckle.AspNetCore.Swagger;
 
 namespace NewsFood
 {
@@ -35,22 +37,31 @@ namespace NewsFood
             services.DIServiceExtension();
             //this services sets MVC
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_1);
+            // Register the Swagger generator, defining 1 or more Swagger documents
+            services.AddSwaggerGen(c =>
+            {
+                c.SwaggerDoc("v1", new Info { Title = "My NewsFood", Version = "v1" });
+            });
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
         public void Configure(IApplicationBuilder app, IHostingEnvironment env)
         {
-            if (env.IsDevelopment())
+            app.UseSwagger();
+            app.UseSwaggerUI(c =>
             {
-                app.UseDeveloperExceptionPage();
-            }
-            else
-            {
-                app.UseHsts();
-            }
-
+                c.SwaggerEndpoint("/swagger/v1/swagger.json", "My API V1");
+                c.RoutePrefix = string.Empty;
+                c.DisplayRequestDuration();
+                c.DisplayOperationId();
+            });
             app.UseHttpsRedirection();
-            app.UseMvc();
+            app.UseMvc(routes =>
+            {
+                // SwaggerGen won't find controllers that are routed via this technique.
+                routes.MapRoute("default", "{controller=Home}/{action=Index}/{id?}");
+            });
+            
         }
     }
 }

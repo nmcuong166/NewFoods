@@ -9,7 +9,7 @@ using NewsFood.Core.Repository;
 
 namespace NewsFood.Controllers
 {
-    [Route("api/[controller]")]
+    [Route("Value")]
     [ApiController]
     public class ValuesController : ControllerBase
     {
@@ -20,18 +20,18 @@ namespace NewsFood.Controllers
         }
 
         // GET api/values
-        [HttpGet]
+        [HttpGet("GetAll")]
         public async Task<ActionResult<IEnumerable<News>>> Get()
         {
-            var id1 = new Guid("4a293ed3-debb-4504-be1a-cb4bc9ec3266"); 
+            var id1 = new Guid("4a293ed3-debb-4504-be1a-cb4bc9ec3266");
             return await _unitOfWork.Repository<News>()
                                     .GetAll()
                                     .Where(s => s.Id == id1).ToListAsync();
         }
 
         // GET api/values/5
-        [HttpGet("{id}")]
-        public async Task<ActionResult<News>> Get(Guid id)
+        [HttpGet("GetProductById")]
+        public async Task<ActionResult<News>> Get([FromQuery]Guid id)
         {
             return await _unitOfWork.Repository<News>().GetAsync(id);
         }
