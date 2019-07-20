@@ -5,6 +5,7 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using NewFood.Data.Models;
+using NewsFood.Core.Common;
 using NewsFood.Core.Repository;
 
 namespace NewsFood.Controllers
@@ -34,6 +35,14 @@ namespace NewsFood.Controllers
         public async Task<ActionResult<News>> Get([FromQuery]Guid id)
         {
             return await _unitOfWork.Repository<News>().GetAsync(id);
+        }
+
+        [HttpGet("GetDynamicColumn")]
+        public async Task<ActionResult<News>> GetFollowColumn([FromQuery]Guid id)
+        {
+            return await _unitOfWork.Repository<News>()
+                .GetAll()
+                .Where("Id", id.ToString()).FirstOrDefaultAsync();
         }
 
         // POST api/values
