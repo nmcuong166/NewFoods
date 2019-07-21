@@ -10,9 +10,10 @@ using NewsFood.Core.Repository;
 
 namespace NewsFood.Controllers
 {
-    [Route("Value")]
+    [Route("[controller]")]
     [ApiController]
-    public class ValuesController : ControllerBase
+    public class ValuesController 
+
     {
         private IUnitOfWork _unitOfWork;
         public ValuesController(IUnitOfWork unitOfWork)

@@ -27,7 +27,7 @@ namespace NewsFood.Core.Common
             Expression right = ConvertTypeOfStringtoTypeOfPropotyName(propotyName, value, param);
             Expression body = Expression.Equal(left, right);
 
-            var pridicateEx = Expression.Lambda<Func<TSource, bool>>(body, new ParameterExpression[] { param});
+            var pridicateEx = Expression.Lambda<Func<TSource, bool>>(body, new ParameterExpression[] { param });
 
             return source.Where(pridicateEx);
         }
