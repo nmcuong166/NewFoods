@@ -1,5 +1,6 @@
 ﻿using Microsoft.Extensions.DependencyInjection;
 using NewsFood.Application.Services;
+using NewsFood.Core.Common.ProcedureHelper;
 using NewsFood.Core.Repository;
 using System;
 using System.Collections.Generic;
@@ -18,6 +19,7 @@ namespace NewsFood.Application
             IList<IServiceCollection> list = new List<IServiceCollection>();
             list.Add(services.AddTransient(typeof(IUnitOfWork), typeof(UnitOfWork)));
             list.Add(services.AddTransient(typeof(IUserService), typeof(UserService)));
+            list.Add(services.AddTransient(typeof(IProcHelper), typeof(ProcHelper)));
             return list;
         }
     }

@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Data;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
@@ -7,16 +8,23 @@ using Microsoft.EntityFrameworkCore;
 using NewFood.Data.Models;
 using NewsFood.Application.Controllers;
 using NewsFood.Core.Common;
+using NewsFood.Core.Common.ProcedureHelper;
 using NewsFood.Core.Repository;
 
 namespace NewsFood.Controllers
 {
-    [Route("[controller]")]
     [ApiController]
     public class ValuesController : AppBaseController
     {
-        public ValuesController(IUnitOfWork unitOfWork): base(unitOfWork)
+        private IProcHelper _procHelper;
+        public ValuesController
+        (
+            IUnitOfWork unitOfWork,
+            IProcHelper procHelper
+        )
+            : base(unitOfWork)
         {
+            _procHelper = procHelper;
         }
 
         // GET api/values
@@ -28,6 +36,22 @@ namespace NewsFood.Controllers
                                     .GetAll()
                                     .Where(s => s.Id == id1).ToListAsync();
         }
+
+        [HttpGet]
+        public async Task<IEnumerable<ContentDataResult>> TestProc()
+        {
+            var query = "select Contents from News";
+            ContentDataResult dataResult = new ContentDataResult();
+
+            var contents = await _procHelper.ExecuteQueryAsync<ContentDataResult>(query, dataResult, CommandType.Text);
+            return contents.Data;
+        }
+
+        public class ContentDataResult
+        {
+            public string Contents { get; set; }
+        }
+
 
         // GET api/values/5
         [HttpGet]
@@ -62,6 +86,12 @@ namespace NewsFood.Controllers
         [HttpDelete]
         public void Delete(int id)
         {
+        }
+
+        [HttpGet]
+        public IEnumerable<string> GetContents()
+        {
+            return _unitOfWork.Repository<News>().GetAll().Select(s => s.Contents);
         }
     }
 }
