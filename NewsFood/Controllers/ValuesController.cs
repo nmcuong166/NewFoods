@@ -19,10 +19,12 @@ namespace NewsFood.Controllers
         private IProcHelper _procHelper;
         public ValuesController
         (
-            IUnitOfWork unitOfWork
+            IUnitOfWork unitOfWork,
+            IProcHelper procHelper
         )
             : base(unitOfWork)
         {
+            _procHelper = procHelper;
         }
 
         // GET api/values
