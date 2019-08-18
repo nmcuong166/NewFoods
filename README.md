@@ -8,8 +8,8 @@ The technology in this project include:
 
 Documentation reference:
 - Application Achitecture:
-https://docs.microsoft.com/en-us/dotnet/architecture/modern-web-apps-azure/common-web-application-architectures
-https://fullstackmark.com/post/18/building-aspnet-core-web-apis-with-clean-architecture
++ https://docs.microsoft.com/en-us/dotnet/architecture/modern-web-apps-azure/common-web-application-architectures
++ https://fullstackmark.com/post/18/building-aspnet-core-web-apis-with-clean-architecture
 - Authentication and Authorize
 + jwt token authentication
 https://jasonwatmore.com/post/2018/08/14/aspnet-core-21-jwt-authentication-tutorial-with-example-api
