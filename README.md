@@ -1,6 +1,5 @@
 # NewFoods
-ChickenTemplate create by Cuong Dinh cao
-The project is created by NMCuong and Phu. The project ís scraffold for buiding website commercial, news, mobile etc... 
+The project is created by NmCuong and Phu. The project ís scraffold for buiding website commercial, news, mobile etc... 
 The technology in this project include: 
 - Backend : Asp.net core 2.2, Entity Framework core 2.2, sql server 2019,JWT json token
 - ForntEnd: Angular 7.0
