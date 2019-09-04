@@ -1,13 +1,12 @@
-﻿using NewsFood.Core.Interface.BaseEntity;
+﻿using Microsoft.AspNetCore.Identity;
+using NewsFood.Core.Entities.BaseEntities;
 using System;
 using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations;
-using System.ComponentModel.DataAnnotations.Schema;
 using System.Text;
 
-namespace NewsFood.Core.Entities.BaseEntities
+namespace NewFood.Infurstructure.Data.Entities
 {
-    public class BaseEntity : Entity , IBaseEntity
+    public class AppUsers : IdentityUser<long>, IBaseEntity
     {
         public bool IsDeleted { get; set; } = false;
         public long? CreatorUserId { get; set; }

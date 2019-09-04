@@ -1,4 +1,4 @@
-﻿using NewsFood.Core.BussinessService.Dto;
+﻿using NewsFood.Core.Dto;
 using NewsFood.Core.Entities;
 using NewsFood.Core.Interface.Repository;
 using System;
@@ -24,11 +24,12 @@ namespace NewsFood.Core.BussinessService
 
         async Task<IEnumerable<NewsDto>> INewsService.GetAllNewsService()
         {
-            var newsRepo = await _newsRepository.GetAll();
-            return newsRepo.Select(s => new NewsDto {
-                Id = s.Id,
-                Contents = s.Contens
-            });
+                var newsRepo = await _newsRepository.GetAll();
+                return newsRepo.Select(s => new NewsDto
+                {
+                    Id = s.Id,
+                    Contents = s.Contens
+                });
         }
     }
 

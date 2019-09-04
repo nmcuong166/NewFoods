@@ -1,4 +1,5 @@
 ﻿using NewsFood.Core.Entities.BaseEntities;
+using NewsFood.Core.Interface.BaseEntity;
 using System;
 using System.Collections.Generic;
 using System.Text;

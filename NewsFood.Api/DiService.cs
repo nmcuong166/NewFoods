@@ -1,4 +1,6 @@
-﻿using Microsoft.Extensions.DependencyInjection;
+﻿using Microsoft.AspNetCore.Identity;
+using Microsoft.Extensions.DependencyInjection;
+using NewFood.Infurstructure.Data.Entities;
 using NewFood.Infurstructure.Data.Repository;
 using NewsFood.Core;
 using NewsFood.Core.BussinessService;
@@ -17,12 +19,15 @@ namespace NewsFood.Api
             IList<IServiceCollection> list = new List<IServiceCollection>();
 
             //Infurstructre
+            list.Add(services.AddTransient(typeof(UserManager<AppUsers>)));
             list.Add(services.AddTransient(typeof(IUnitOfWork), typeof(UnitOfWork)));
             list.Add(services.AddTransient(typeof(IRepository<>), typeof(Repository<>)));
             list.Add(services.AddTransient(typeof(INewsRepository), typeof(NewsRepository)));
-            
+            list.Add(services.AddTransient(typeof(IUserRepository), typeof(UserRepository)));
+
             //Bussiness Service
             list.Add(services.AddTransient(typeof(INewsService), typeof(NewsService)));
+            list.Add(services.AddTransient(typeof(IUserService), typeof(UserService)));
             return list;
         }
     }
