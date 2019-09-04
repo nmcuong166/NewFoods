@@ -1,15 +1,12 @@
-﻿using System;
+﻿using NewsFood.Core.Interface.BaseEntity;
+using System;
 using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations;
-using System.ComponentModel.DataAnnotations.Schema;
 using System.Text;
 
 namespace NewsFood.Core.Entities.BaseEntities
 {
-    public class Entity
+    public class Entity : IEntity
     {
-        [Key]
-        [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
-        public int Id { get; set; }
+        public long Id { get; set; }
     }
 }

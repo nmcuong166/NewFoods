@@ -1,6 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using NewsFood.Core.BussinessService;
-using NewsFood.Core.BussinessService.Dto;
+using NewsFood.Core.Dto;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 
