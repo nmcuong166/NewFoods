@@ -18,5 +18,7 @@ namespace NewsFood.Core.Entities
             this.UserName = userName;
             this.PasswordHash = passwordHash;
         }
+
+        public User() { }
     }
 }

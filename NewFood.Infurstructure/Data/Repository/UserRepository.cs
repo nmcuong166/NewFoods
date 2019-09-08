@@ -26,42 +26,23 @@ namespace NewFood.Infurstructure.Data.Repository
 
         public async Task<bool> CheckPassword(User user, string password)
         {
-            var appUser = new AppUsers()
-            {
-                Id = user.Id,
-                Email = user.Email,
-                UserName = user.UserName
-            };
-            //return await _userManager.CheckPasswordAsync(_mapper.Map<AppUsers>(user), password);
-            return await _userManager.CheckPasswordAsync(appUser, password);
+            var appUser = _mapper.Map<AppUsers>(user);
+            var rs =  await _userManager.CheckPasswordAsync(appUser, password);
+            return rs;
         }
 
         public async Task<User> FindbyName(string userName)
         {
             var result = await _userManager.FindByNameAsync(userName);
-            return new User(result.Email, result.UserName, result.Id);
+            var user = _mapper.Map<User>(result);
+            return user;
         }
 
         public async Task<CreateUserRespone> Create(User user, string password)
         {
-            try
-            {
-                //var appUser = _mapper.Map<AppUsers>(user);
-                var appUser = new AppUsers
-                {
-                    Email = user.Email,
-                    UserName = user.UserName,
-                    PasswordHash = user.PasswordHash
-                };
-                var result = await _userManager.CreateAsync(appUser, password);
-                return new CreateUserRespone(appUser.Id, result.Succeeded, result.Succeeded ? null : result.Errors.Select(s => new Error { Code = s.Code, Description = s.Description }));
-            }
-            catch (Exception ex)
-            {
-
-            }
-            return null;
-
+            var appUser = _mapper.Map<AppUsers>(user);
+            var result = await _userManager.CreateAsync(appUser, password);
+            return new CreateUserRespone(appUser.Id, result.Succeeded, result.Succeeded ? null : result.Errors.Select(s => new Error { Code = s.Code, Description = s.Description }));
         }
     }
 }
