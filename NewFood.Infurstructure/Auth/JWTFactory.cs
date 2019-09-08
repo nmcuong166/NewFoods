@@ -27,20 +27,21 @@ namespace NewFood.Infurstructure.Auth
                 new Claim(JwtRegisteredClaimNames.Sub, userName),
                 new Claim(ClaimTypes.NameIdentifier, id.ToString()),
             };
-
+            var tokenHandler = new JwtSecurityTokenHandler();
             var key = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(_configuration["JWT:JwtKey"]));
-            var creds = new SigningCredentials(key, SecurityAlgorithms.HmacSha256);
-            var expires = DateTime.Now.AddDays(Convert.ToDouble(_configuration["JWT:JwtExpireDays"]));
+            var creds = new SigningCredentials(key, SecurityAlgorithms.HmacSha256Signature);
+            var expires = DateTime.Now.AddDays(7);
+            var tokenDescriptor = new SecurityTokenDescriptor
+            {
+                Subject = new ClaimsIdentity(claims),
+                Expires = expires,
+                SigningCredentials = creds
+                
+            };
 
-            var jwt = new JwtSecurityToken(
-                issuer: _configuration["JWT:JwtIssuer"],
-                audience: _configuration["JWT:JwtIssuer"],
-                claims: claims,
-                expires: expires,
-                signingCredentials: creds);
-
-            var encoded = new JwtSecurityTokenHandler().WriteToken(jwt);
-            return new Token(id, encoded, expires.Second);
+            var token = tokenHandler.CreateToken(tokenDescriptor);
+            var encoded = tokenHandler.WriteToken(token);
+            return new Token(id, encoded, expires.Day);
         }
     }
 }
