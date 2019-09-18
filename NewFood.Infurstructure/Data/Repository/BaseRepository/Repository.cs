@@ -42,7 +42,8 @@ namespace NewFood.Infurstructure.Data.Repository
 
         public void Delete(TEntity entity)
         {
-            throw new NotImplementedException();
+            _dbContext.Entry(entity).State = Microsoft.EntityFrameworkCore.EntityState.Deleted;
+            _dbContext.SaveChanges();
         }
     }
 }

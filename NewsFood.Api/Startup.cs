@@ -1,17 +1,18 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
+﻿using AutoMapper;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
-using Microsoft.Extensions.Logging;
-using Microsoft.Extensions.Options;
+using Microsoft.IdentityModel.Tokens;
+using NewFood.Infurstructure.Data.Entities;
 using NewFood.Infurstructure.Data.EntityFramework;
 using Swashbuckle.AspNetCore.Swagger;
+using NewFood.Infurstructure.Data.Mapping;
+using System.Text;
 
 namespace NewsFood.Api
 {
@@ -27,14 +28,48 @@ namespace NewsFood.Api
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-            //this service sets connect database from appsettings.json
+            var key = Encoding.ASCII.GetBytes("SOME_RANDOM_KEY_DO_NOT_SHARE");
 
+            //this service sets connect database from appsettings.json
             services.AddDbContext<ApplicationDbContext>(option => { option.UseSqlServer(Configuration["Data:NewsFood:ConnectionString"]); });
 
-            services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_2);
+            //this services sets Identity
+            services.AddIdentity<AppUsers, AppRoles>(options =>
+            {
+                options.User.RequireUniqueEmail = true;
+                options.Password.RequireDigit = false;
+                options.Password.RequireLowercase = false;
+                options.Password.RequireNonAlphanumeric = false;
+                options.Password.RequireUppercase = false;
+            })
+                    .AddEntityFrameworkStores<ApplicationDbContext>()
+                    .AddDefaultTokenProviders();
 
-            //this services set DI
+            //this services set JWT Token 
+            services.AddAuthentication(x =>
+            {
+                x.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
+                x.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
+            })
+                .AddJwtBearer(options =>
+                {
+                    options.RequireHttpsMetadata = false;
+                    options.SaveToken = true;
+                    options.TokenValidationParameters = new TokenValidationParameters
+                    {
+                        ValidateIssuerSigningKey = true,
+                        IssuerSigningKey = new SymmetricSecurityKey(key),
+                        ValidateIssuer = false,
+                        ValidateAudience = false
+                    };
+                });
+
+            //this services register DI
             services.DIServiceExtension();
+            //Register AutoMapper for file DataProfiles in project Infurstructure
+            services.AddAutoMapper(typeof(DataProfiles));
+
+            services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_2);
 
             // Register the Swagger generator, defining 1 or more Swagger documents
             services.AddSwaggerGen(c =>
@@ -57,6 +92,7 @@ namespace NewsFood.Api
                 app.UseDeveloperExceptionPage();
             }
 
+            app.UseAuthentication();
             app.UseSwagger();
             app.UseSwaggerUI(c =>
             {
@@ -74,5 +110,6 @@ namespace NewsFood.Api
 
             app.UseMvc();
         }
+
     }
 }

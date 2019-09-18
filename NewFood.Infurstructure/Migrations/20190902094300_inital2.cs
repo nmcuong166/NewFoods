@@ -4,7 +4,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace NewFood.Infurstructure.Migrations
 {
-    public partial class inital1 : Migration
+    public partial class inital2 : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -12,7 +12,8 @@ namespace NewFood.Infurstructure.Migrations
                 name: "AspNetRoles",
                 columns: table => new
                 {
-                    Id = table.Column<string>(nullable: false),
+                    Id = table.Column<long>(nullable: false)
+                        .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
                     Name = table.Column<string>(maxLength: 256, nullable: true),
                     NormalizedName = table.Column<string>(maxLength: 256, nullable: true),
                     ConcurrencyStamp = table.Column<string>(nullable: true)
@@ -26,7 +27,8 @@ namespace NewFood.Infurstructure.Migrations
                 name: "AspNetUsers",
                 columns: table => new
                 {
-                    Id = table.Column<string>(nullable: false),
+                    Id = table.Column<long>(nullable: false)
+                        .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
                     UserName = table.Column<string>(maxLength: 256, nullable: true),
                     NormalizedUserName = table.Column<string>(maxLength: 256, nullable: true),
                     Email = table.Column<string>(maxLength: 256, nullable: true),
@@ -40,7 +42,13 @@ namespace NewFood.Infurstructure.Migrations
                     TwoFactorEnabled = table.Column<bool>(nullable: false),
                     LockoutEnd = table.Column<DateTimeOffset>(nullable: true),
                     LockoutEnabled = table.Column<bool>(nullable: false),
-                    AccessFailedCount = table.Column<int>(nullable: false)
+                    AccessFailedCount = table.Column<int>(nullable: false),
+                    IsDeleted = table.Column<bool>(nullable: false),
+                    CreatorUserId = table.Column<long>(nullable: true),
+                    CreationTime = table.Column<DateTime>(nullable: false),
+                    ModifiedTime = table.Column<DateTime>(nullable: false),
+                    DeleteUserId = table.Column<long>(nullable: true),
+                    DeletedTime = table.Column<DateTime>(nullable: true)
                 },
                 constraints: table =>
                 {
@@ -51,7 +59,7 @@ namespace NewFood.Infurstructure.Migrations
                 name: "News",
                 columns: table => new
                 {
-                    Id = table.Column<int>(nullable: false)
+                    Id = table.Column<long>(nullable: false)
                         .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
                     IsDeleted = table.Column<bool>(nullable: false),
                     CreatorUserId = table.Column<long>(nullable: true),
@@ -72,7 +80,7 @@ namespace NewFood.Infurstructure.Migrations
                 {
                     Id = table.Column<int>(nullable: false)
                         .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
-                    RoleId = table.Column<string>(nullable: false),
+                    RoleId = table.Column<long>(nullable: false),
                     ClaimType = table.Column<string>(nullable: true),
                     ClaimValue = table.Column<string>(nullable: true)
                 },
@@ -93,7 +101,7 @@ namespace NewFood.Infurstructure.Migrations
                 {
                     Id = table.Column<int>(nullable: false)
                         .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
-                    UserId = table.Column<string>(nullable: false),
+                    UserId = table.Column<long>(nullable: false),
                     ClaimType = table.Column<string>(nullable: true),
                     ClaimValue = table.Column<string>(nullable: true)
                 },
@@ -115,7 +123,7 @@ namespace NewFood.Infurstructure.Migrations
                     LoginProvider = table.Column<string>(nullable: false),
                     ProviderKey = table.Column<string>(nullable: false),
                     ProviderDisplayName = table.Column<string>(nullable: true),
-                    UserId = table.Column<string>(nullable: false)
+                    UserId = table.Column<long>(nullable: false)
                 },
                 constraints: table =>
                 {
@@ -132,8 +140,8 @@ namespace NewFood.Infurstructure.Migrations
                 name: "AspNetUserRoles",
                 columns: table => new
                 {
-                    UserId = table.Column<string>(nullable: false),
-                    RoleId = table.Column<string>(nullable: false)
+                    UserId = table.Column<long>(nullable: false),
+                    RoleId = table.Column<long>(nullable: false)
                 },
                 constraints: table =>
                 {
@@ -156,7 +164,7 @@ namespace NewFood.Infurstructure.Migrations
                 name: "AspNetUserTokens",
                 columns: table => new
                 {
-                    UserId = table.Column<string>(nullable: false),
+                    UserId = table.Column<long>(nullable: false),
                     LoginProvider = table.Column<string>(nullable: false),
                     Name = table.Column<string>(nullable: false),
                     Value = table.Column<string>(nullable: true)
@@ -175,12 +183,12 @@ namespace NewFood.Infurstructure.Migrations
             migrationBuilder.InsertData(
                 table: "News",
                 columns: new[] { "Id", "Contens", "CreationTime", "CreatorUserId", "DeleteUserId", "DeletedTime", "IsDeleted", "ModifiedTime" },
-                values: new object[] { 1, "Cuong", new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), null, null, null, false, new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified) });
+                values: new object[] { 1L, "Cuong", new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), null, null, null, false, new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified) });
 
             migrationBuilder.InsertData(
                 table: "News",
                 columns: new[] { "Id", "Contens", "CreationTime", "CreatorUserId", "DeleteUserId", "DeletedTime", "IsDeleted", "ModifiedTime" },
-                values: new object[] { 2, "Lanh", new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), null, null, null, false, new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified) });
+                values: new object[] { 2L, "Lanh", new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), null, null, null, false, new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified) });
 
             migrationBuilder.CreateIndex(
                 name: "IX_AspNetRoleClaims_RoleId",

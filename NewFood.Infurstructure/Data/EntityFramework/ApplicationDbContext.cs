@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
+using NewFood.Infurstructure.Data.Entities;
 using NewsFood.Core.Entities;
 using NewsFood.Core.Entities.BaseEntities;
 using System;
@@ -11,7 +12,7 @@ using System.Threading.Tasks;
 
 namespace NewFood.Infurstructure.Data.EntityFramework
 {
-    public class ApplicationDbContext : IdentityDbContext
+    public class ApplicationDbContext : IdentityDbContext<AppUsers,AppRoles,long>
     {
         public virtual DbSet<News> News { get; set; }
 
@@ -41,14 +42,14 @@ namespace NewFood.Infurstructure.Data.EntityFramework
 
         private void AddInfo()
         {
-            var entries = ChangeTracker.Entries().Where(x => x.Entity is BaseEntity && (x.State == EntityState.Added || x.State == EntityState.Modified));
+            var entries = ChangeTracker.Entries().Where(x => x.Entity is IBaseEntity && (x.State == EntityState.Added || x.State == EntityState.Modified));
             foreach (var entry in entries)
             {
                 if (entry.State == EntityState.Added)
                 {
-                    ((BaseEntity)entry.Entity).CreationTime = DateTime.UtcNow;
+                    ((IBaseEntity)entry.Entity).CreationTime = DateTime.UtcNow;
                 }
-                ((BaseEntity)entry.Entity).ModifiedTime = DateTime.UtcNow;
+                ((IBaseEntity)entry.Entity).ModifiedTime = DateTime.UtcNow;
             }
         }
     }

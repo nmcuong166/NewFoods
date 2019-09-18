@@ -1,6 +1,7 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
 using NewsFood.Core.BussinessService;
-using NewsFood.Core.BussinessService.Dto;
+using NewsFood.Core.Dto;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 
@@ -14,10 +15,11 @@ namespace NewsFood.Api.Controllers
             _newsService = newsService;
         }
 
+        [Authorize]
         [HttpGet]
-        public async Task<IEnumerable<NewsDto>> Get()
+        public async Task<IActionResult> Get()
         {
-            return await _newsService.GetAllNewsService();
+            return Ok(await _newsService.GetAllNewsService());
         }
     }
 }
