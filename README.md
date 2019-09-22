@@ -17,3 +17,9 @@ https://docs.microsoft.com/en-us/aspnet/core/tutorials/getting-started-with-swas
 - jwt token authentication
 https://jasonwatmore.com/post/2018/08/14/aspnet-core-21-jwt-authentication-tutorial-with-example-api
 
+-Authorization:
+https://docs.microsoft.com/en-us/aspnet/core/security/authorization/roles?view=aspnetcore-2.2
+https://github.com/blowdart/AspNetAuthorizationWorkshop
+
+Angular
+
