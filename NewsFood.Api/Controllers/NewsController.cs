@@ -7,6 +7,7 @@ using System.Threading.Tasks;
 
 namespace NewsFood.Api.Controllers
 {
+    [Authorize(Roles = "SuperAdmin")]
     public class NewsController : AppBaseController
     {
         private readonly INewsService _newsService;

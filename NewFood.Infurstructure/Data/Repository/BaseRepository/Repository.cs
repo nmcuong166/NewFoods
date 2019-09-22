@@ -45,5 +45,23 @@ namespace NewFood.Infurstructure.Data.Repository
             _dbContext.Entry(entity).State = Microsoft.EntityFrameworkCore.EntityState.Deleted;
             _dbContext.SaveChanges();
         }
+
+        public void InsertAsync(TEntity entity)
+        {
+            _dbContext.Set<TEntity>().Add(entity);
+            _dbContext.SaveChangesAsync();
+        }
+
+        public void UpdateAsync(TEntity entity)
+        {
+            _dbContext.Entry(entity).State = Microsoft.EntityFrameworkCore.EntityState.Modified;
+            _dbContext.SaveChangesAsync();
+        }
+
+        public void DeleteAsync(TEntity entity)
+        {
+            _dbContext.Entry(entity).State = Microsoft.EntityFrameworkCore.EntityState.Modified;
+            _dbContext.SaveChangesAsync();
+        }
     }
 }

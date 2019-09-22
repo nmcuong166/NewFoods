@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace NewsFood.Api.Common.Extension
+namespace NewsFood.Core.Common.Extension
 {
     public static class IEnumerableEx
     {
@@ -14,6 +14,11 @@ namespace NewsFood.Api.Common.Extension
                 source.Where(predicate);
             }
             return source;
+        }
+
+        public static bool IsNullOrEmpty<Tsource>(this IEnumerable<Tsource> sources)
+        {
+            return sources == null || !sources.Any();
         }
     }
 }

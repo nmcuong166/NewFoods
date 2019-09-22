@@ -12,7 +12,10 @@ namespace NewsFood.Core
         Task<TEntity> GetAsync(long id);
         IQueryable<TEntity> GetAll();
         void Insert(TEntity entity);
+        void InsertAsync(TEntity entity);
         void Update(TEntity entity);
+        void UpdateAsync(TEntity entity);
         void Delete(TEntity entity);
+        void DeleteAsync(TEntity entity);
     }
 }

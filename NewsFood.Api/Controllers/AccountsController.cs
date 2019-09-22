@@ -14,7 +14,6 @@ using NewsFood.Core.Interface.Repository;
 
 namespace NewsFood.Api.Controllers
 {
-    [Authorize]
     public class AccountsController : AppBaseController
     {
         private readonly IUserService _userService;
@@ -38,11 +37,23 @@ namespace NewsFood.Api.Controllers
             return NotFound();
         }
 
+        [Authorize(Roles = "SuperAdmin")]
+        [HttpPost("RegisterAdmin")]
+        public async Task<ActionResult> RegisterAccountAdmin([FromBody] RegisterUserDto userDto)
+        {
+            var result = await _userService.HandleRegisterAdmin(userDto);
+            if (result)
+            {
+                return Ok();
+            }
+            return NotFound();
+        }
+
         [AllowAnonymous]
         [HttpPost("Login")]
         public async Task<LoginRespone> Login([FromBody] LoginRequest loginRequest)
         {
-            return await _userService.HandleLoginUser(loginRequest);
+            return await _userService.HandleLoginAccount(loginRequest);
         }
     }
 }

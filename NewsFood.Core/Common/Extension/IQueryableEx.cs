@@ -4,7 +4,7 @@ using System.Linq;
 using System.Linq.Expressions;
 using System.Threading.Tasks;
 
-namespace NewsFood.Api.Common.Extension
+namespace NewsFood.Core.Common.Extension
 {
     public static class IQueryableEx
     {
