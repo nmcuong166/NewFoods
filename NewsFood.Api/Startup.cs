@@ -13,6 +13,7 @@ using NewFood.Infurstructure.Data.EntityFramework;
 using Swashbuckle.AspNetCore.Swagger;
 using NewFood.Infurstructure.Data.Mapping;
 using System.Text;
+using NewFood.Infurstructure.Data;
 
 namespace NewsFood.Api
 {
@@ -31,7 +32,11 @@ namespace NewsFood.Api
             var key = Encoding.ASCII.GetBytes("SOME_RANDOM_KEY_DO_NOT_SHARE");
 
             //this service sets connect database from appsettings.json
-            services.AddDbContext<ApplicationDbContext>(option => { option.UseSqlServer(Configuration["Data:NewsFood:ConnectionString"]); });
+            services.AddDbContext<ApplicationDbContext>(option => 
+            {
+                option.UseSqlServer(Configuration["Data:NewsFood:ConnectionString"]);
+                option.EnableSensitiveDataLogging();
+            });
 
             //this services sets Identity
             services.AddIdentity<AppUsers, AppRoles>(options =>
@@ -79,7 +84,7 @@ namespace NewsFood.Api
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
-        public void Configure(IApplicationBuilder app, IHostingEnvironment env)
+        public void Configure(IApplicationBuilder app, IHostingEnvironment env, MyIdentityDataInitializer myIdentityData  )
         {
             // global cors policy
             app.UseCors(x => x
@@ -101,13 +106,12 @@ namespace NewsFood.Api
                 c.DisplayRequestDuration();
                 c.DisplayOperationId();
             });
-
             app.UseMvc(routes =>
             {
                 // SwaggerGen won't find controllers that are routed via this technique.
                 routes.MapRoute("default", "{controller=Home}/{action=Index}/{id?}");
             });
-
+            myIdentityData.SeedAdminUser();
             app.UseMvc();
         }
 

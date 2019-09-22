@@ -2,12 +2,14 @@
 using Microsoft.AspNetCore.Identity;
 using NewFood.Infurstructure.Data.Entities;
 using NewsFood.Core.Dto;
+using NewsFood.Core.Dto.BussinessService;
 using NewsFood.Core.Dto.User;
 using NewsFood.Core.Entities;
 using NewsFood.Core.Interface.Repository;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Security.Claims;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -43,6 +45,22 @@ namespace NewFood.Infurstructure.Data.Repository
             var appUser = _mapper.Map<AppUsers>(user);
             var result = await _userManager.CreateAsync(appUser, password);
             return new CreateUserRespone(appUser.Id, result.Succeeded, result.Succeeded ? null : result.Errors.Select(s => new Error { Code = s.Code, Description = s.Description }));
+        }
+
+        public async Task<List<Claim>> GetUserClaims(User user)
+        {
+            var appUser = _mapper.Map<AppUsers>(user);
+            var result = await _userManager.GetClaimsAsync(appUser);
+
+            return result.ToList();
+        }
+
+        public async Task<CreateUserRespone> InsertClaims(User user, Claim claim)
+        {
+                var username = user.UserName;
+                var userById = await _userManager.FindByNameAsync(user.UserName);
+                var result = await _userManager.AddClaimAsync(userById, claim);
+                return new CreateUserRespone(userById.Id, result.Succeeded, result.Succeeded ? null : result.Errors.Select(s => new Error { Code = s.Code, Description = s.Description }));
         }
     }
 }

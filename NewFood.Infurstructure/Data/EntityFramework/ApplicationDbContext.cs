@@ -12,13 +12,15 @@ using System.Threading.Tasks;
 
 namespace NewFood.Infurstructure.Data.EntityFramework
 {
-    public class ApplicationDbContext : IdentityDbContext<AppUsers,AppRoles,long>
+    public class ApplicationDbContext : IdentityDbContext<AppUsers, AppRoles, long>
     {
         public virtual DbSet<News> News { get; set; }
 
         public ApplicationDbContext(DbContextOptions<ApplicationDbContext> options) : base(options)
-        {}
-       
+        {
+            //Do Nothing
+        }
+
         public override int SaveChanges()
         {
             AddInfo();
@@ -34,11 +36,16 @@ namespace NewFood.Infurstructure.Data.EntityFramework
         protected override void OnModelCreating(ModelBuilder builder)
         {
             base.OnModelCreating(builder);
-
-            builder.Entity<News>().HasData(
-                new News { Id = 1, Contens = "Cuong" },
-                new News { Id = 2, Contens = "Lanh" });
+            //SeedData(builder);
         }
+
+        //private void SeedData(ModelBuilder builder)
+        //{
+        //    // data table News
+        //    builder.Entity<News>().HasData(
+        //      new News { Id = 1, Contens = "Cuong" },
+        //      new News { Id = 2, Contens = "Lanh" });
+        //}
 
         private void AddInfo()
         {

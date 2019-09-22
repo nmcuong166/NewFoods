@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Identity;
 using Microsoft.Extensions.DependencyInjection;
 using NewFood.Infurstructure.Auth;
+using NewFood.Infurstructure.Data;
 using NewFood.Infurstructure.Data.Entities;
 using NewFood.Infurstructure.Data.Repository;
 using NewsFood.Core;
@@ -22,9 +23,11 @@ namespace NewsFood.Api
             {
                 //Infurstructre
                 services.AddTransient(typeof(UserManager<AppUsers>)),
+                services.AddTransient(typeof(RoleManager<AppRoles>)),
                 services.AddTransient(typeof(IJWTFactory), typeof(JWTFactory)),
                 services.AddTransient(typeof(IUnitOfWork), typeof(UnitOfWork)),
                 services.AddTransient(typeof(IRepository<>), typeof(Repository<>)),
+                services.AddTransient(typeof(MyIdentityDataInitializer)),
                 services.AddTransient(typeof(INewsRepository), typeof(NewsRepository)),
                 services.AddTransient(typeof(IUserRepository), typeof(UserRepository)),
 

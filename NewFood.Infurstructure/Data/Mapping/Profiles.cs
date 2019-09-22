@@ -11,8 +11,8 @@ namespace NewFood.Infurstructure.Data.Mapping
     {
         public DataProfiles()
         {
-            CreateMap<User, AppUsers>().ConstructUsing(u => new AppUsers { Id = u.Id, Email = u.Email, UserName = u.UserName, PasswordHash = u.PasswordHash });
-            CreateMap<AppUsers, User>().ConstructUsing(au => new User(au.Email, au.UserName, au.Id, au.PasswordHash));
+            CreateMap<User, AppUsers>().ConstructUsing(u => new AppUsers { Email = u.Email, UserName = u.UserName, PasswordHash = u.PasswordHash, SecurityStamp = u.SecurityStamp });
+            CreateMap<AppUsers, User>().ConstructUsing(au => new User { Email =  au.Email, UserName =  au.UserName, Id =  au.Id, PasswordHash = au.PasswordHash, SecurityStamp = au.SecurityStamp });
         }
     }
 }
