@@ -10,13 +10,17 @@ Documentation reference:
 WebApi .net core 2
 - Clear Achitecture
 https://blog.cleancoder.com/uncle-bob/2012/08/13/the-clean-architecture.html
+
 - Application Achitecture:
  https://docs.microsoft.com/en-us/dotnet/architecture/modern-web-apps-azure/common-web-application-architectures
+ 
 -unit of work and repository pattern: https://docs.microsoft.com/en-us/aspnet/mvc/overview/older-versions/getting-started-with-ef-5-using-mvc-4/implementing-the-repository-and-unit-of-work-patterns-in-an-asp-net-mvc-application
+
 - Install Swagger: 
 https://docs.microsoft.com/en-us/aspnet/core/tutorials/getting-started-with-swashbuckle?view=aspnetcore-2.2&tabs=visual-studio
 - jwt token authentication
 https://jasonwatmore.com/post/2018/08/14/aspnet-core-21-jwt-authentication-tutorial-with-example-api
+
 -Authorization:
 https://docs.microsoft.com/en-us/aspnet/core/security/authorization/roles?view=aspnetcore-2.2
 https://github.com/blowdart/AspNetAuthorizationWorkshop
