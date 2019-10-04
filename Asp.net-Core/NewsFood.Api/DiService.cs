@@ -7,6 +7,7 @@ using NewFood.Infurstructure.Data.Repository;
 using NewsFood.Core;
 using NewsFood.Core.BussinessService;
 using NewsFood.Core.Interface.Auth;
+using NewsFood.Core.Interface.Bussiness;
 using NewsFood.Core.Interface.Repository;
 using System;
 using System.Collections.Generic;
@@ -22,8 +23,8 @@ namespace NewsFood.Api
             IList<IServiceCollection> list = new List<IServiceCollection>
             {
                 //Infurstructre
-                services.AddTransient(typeof(UserManager<AppUsers>)),
-                services.AddTransient(typeof(RoleManager<AppRoles>)),
+                services.AddScoped(typeof(UserManager<AppUsers>)),
+                services.AddScoped(typeof(RoleManager<AppRoles>)),
                 services.AddTransient(typeof(IJWTFactory), typeof(JWTFactory)),
                 services.AddTransient(typeof(IUnitOfWork), typeof(UnitOfWork)),
                 services.AddTransient(typeof(IRepository<>), typeof(Repository<>)),

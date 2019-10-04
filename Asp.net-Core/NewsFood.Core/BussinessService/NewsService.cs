@@ -1,5 +1,6 @@
 ﻿using NewsFood.Core.Dto;
 using NewsFood.Core.Entities;
+using NewsFood.Core.Interface.Bussiness;
 using NewsFood.Core.Interface.Repository;
 using System;
 using System.Collections.Generic;
@@ -9,27 +10,23 @@ using System.Threading.Tasks;
 
 namespace NewsFood.Core.BussinessService
 {
-    public interface INewsService
-    {
-        Task<IEnumerable<NewsDto>> GetAllNewsService();
-    }
-
     public class NewsService : INewsService
     {
         private readonly INewsRepository _newsRepository;
+
         public NewsService(INewsRepository newsRepository)
         {
             _newsRepository = newsRepository;
         }
 
-        async Task<IEnumerable<NewsDto>> INewsService.GetAllNewsService()
+        public async Task<IEnumerable<NewsDto>> GetAllNewsServiceAsync()
         {
-                var newsRepo = await _newsRepository.GetAll();
-                return newsRepo.Select(s => new NewsDto
-                {
-                    Id = s.Id,
-                    Contents = s.Contens
-                });
+            var newsRepo = await _newsRepository.GetAll();
+            return newsRepo.Select(s => new NewsDto
+            {
+                Id = s.Id,
+                Contents = s.Contens
+            });
         }
     }
 

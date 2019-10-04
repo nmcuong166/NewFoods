@@ -4,7 +4,7 @@ using System;
 using System.Collections.Generic;
 using System.Text;
 
-namespace NewsFood.Core.BussinessService
+namespace NewsFood.Core.Interface.Repository
 {
     public interface IUnitOfWork : IDisposable
     {

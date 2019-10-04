@@ -2,6 +2,7 @@
 using NewsFood.Core.Dto.User;
 using NewsFood.Core.Entities;
 using NewsFood.Core.Interface.Auth;
+using NewsFood.Core.Interface.Bussiness;
 using NewsFood.Core.Interface.Repository;
 using System;
 using System.Collections.Generic;
@@ -11,13 +12,6 @@ using System.Threading.Tasks;
 
 namespace NewsFood.Core.BussinessService
 {
-    public interface IUserService
-    {
-        Task<bool> HandleRegisterUser(RegisterUserDto user);
-        Task<bool> HandleRegisterAdmin(RegisterUserDto userDto);
-        Task<LoginRespone> HandleLoginAccount(LoginRequest message);
-    }
-
     public class UserService : IUserService
     {
         private readonly IUserRepository _userRepository;
@@ -28,7 +22,7 @@ namespace NewsFood.Core.BussinessService
             _jwtFactory = jwtFactory;
         }
 
-        public async Task<bool> HandleRegisterUser(RegisterUserDto userDto)
+        public async Task<bool> HandleRegisterUserAsync(RegisterUserDto userDto)
         {
             var resultUser = await _userRepository.Create(new User(userDto.Email, userDto.UserName), userDto.Password);
             if (resultUser.Success)
@@ -39,7 +33,7 @@ namespace NewsFood.Core.BussinessService
             return resultUser.Success;
         }
 
-        public async Task<bool> HandleRegisterAdmin(RegisterUserDto userDto)
+        public async Task<bool> HandleRegisterAdminAsync(RegisterUserDto userDto)
         {
             var user = new User(userDto.Email, userDto.UserName);
             var resultUser = await _userRepository.Create(user, userDto.Password);
@@ -51,7 +45,7 @@ namespace NewsFood.Core.BussinessService
             return resultUser.Success;
         }
 
-        public async Task<LoginRespone> HandleLoginAccount(LoginRequest message)
+        public async Task<LoginRespone> HandleLoginAccountAsync(LoginRequest message)
         {
             var user = await _userRepository.FindbyName(message.UserName);
             if (user != null)
