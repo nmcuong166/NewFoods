@@ -1,22 +1,22 @@
 # NewFoods
-The project is created by NmCuong and Phu. The project is scraffold for buiding website commercial, news, mobile etc... 
+The project is created by NmCuong and Phu, Lanh. The project is scraffold for buiding website and mobile for commercial, news etc... 
 The technology in this project include: 
-- Backend : Asp.net core 2.2, Entity Framework core 2.2, sql server 2019,JWT json token
-- ForntEnd: Angular 7.0
-- Mobile: Xamarin 4.0.0
-
+- Backend : WebApi .net core 2.2, Entity Framework core 2.2, Sql server, JWT json token, 
+- FrontEnd: Angular 7.0
+- Mobile: Xamarin Form 4.1.0
 
 Documentation reference:
-WebApi .net core 2
 
+WebApi .net core 2
+- Clear Achitecture
+https://blog.cleancoder.com/uncle-bob/2012/08/13/the-clean-architecture.html
+- Application Achitecture:
+ https://docs.microsoft.com/en-us/dotnet/architecture/modern-web-apps-azure/common-web-application-architectures
 -unit of work and repository pattern: https://docs.microsoft.com/en-us/aspnet/mvc/overview/older-versions/getting-started-with-ef-5-using-mvc-4/implementing-the-repository-and-unit-of-work-patterns-in-an-asp-net-mvc-application
 - Install Swagger: 
 https://docs.microsoft.com/en-us/aspnet/core/tutorials/getting-started-with-swashbuckle?view=aspnetcore-2.2&tabs=visual-studio
-- Application Achitecture:
- https://docs.microsoft.com/en-us/dotnet/architecture/modern-web-apps-azure/common-web-application-architectures
 - jwt token authentication
 https://jasonwatmore.com/post/2018/08/14/aspnet-core-21-jwt-authentication-tutorial-with-example-api
-
 -Authorization:
 https://docs.microsoft.com/en-us/aspnet/core/security/authorization/roles?view=aspnetcore-2.2
 https://github.com/blowdart/AspNetAuthorizationWorkshop
