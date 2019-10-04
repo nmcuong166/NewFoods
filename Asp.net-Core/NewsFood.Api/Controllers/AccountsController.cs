@@ -10,6 +10,7 @@ using NewsFood.Core.BussinessService;
 using NewsFood.Core.Dto;
 using NewsFood.Core.Dto.User;
 using NewsFood.Core.Entities;
+using NewsFood.Core.Interface.Bussiness;
 using NewsFood.Core.Interface.Repository;
 
 namespace NewsFood.Api.Controllers
@@ -29,7 +30,7 @@ namespace NewsFood.Api.Controllers
         [HttpPost("Register")]
         public async Task<ActionResult> RegisterAccount([FromBody] RegisterUserDto userDto)
         {
-            var result = await _userService.HandleRegisterUser(userDto);
+            var result = await _userService.HandleRegisterUserAsync(userDto);
             if (result)
             {
                 return Ok();
@@ -41,7 +42,7 @@ namespace NewsFood.Api.Controllers
         [HttpPost("RegisterAdmin")]
         public async Task<ActionResult> RegisterAccountAdmin([FromBody] RegisterUserDto userDto)
         {
-            var result = await _userService.HandleRegisterAdmin(userDto);
+            var result = await _userService.HandleRegisterAdminAsync(userDto);
             if (result)
             {
                 return Ok();
@@ -53,7 +54,7 @@ namespace NewsFood.Api.Controllers
         [HttpPost("Login")]
         public async Task<LoginRespone> Login([FromBody] LoginRequest loginRequest)
         {
-            return await _userService.HandleLoginAccount(loginRequest);
+            return await _userService.HandleLoginAccountAsync(loginRequest);
         }
     }
 }

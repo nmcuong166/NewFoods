@@ -32,7 +32,7 @@ namespace NewsFood.Api
             var key = Encoding.ASCII.GetBytes("SOME_RANDOM_KEY_DO_NOT_SHARE");
 
             //this service sets connect database from appsettings.json
-            services.AddDbContext<ApplicationDbContext>(option => 
+            services.AddDbContext<ApplicationDbContext>(option =>
             {
                 option.UseSqlServer(Configuration["Data:NewsFood:ConnectionString"]);
                 option.EnableSensitiveDataLogging();
@@ -84,7 +84,7 @@ namespace NewsFood.Api
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
-        public void Configure(IApplicationBuilder app, IHostingEnvironment env, MyIdentityDataInitializer myIdentityData  )
+        public void Configure(IApplicationBuilder app, IHostingEnvironment env, MyIdentityDataInitializer myIdentityData)
         {
             // global cors policy
             app.UseCors(x => x

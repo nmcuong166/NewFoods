@@ -1,9 +1,9 @@
 ﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using NewsFood.Core.BussinessService;
 using NewsFood.Core.Dto;
 using System.Collections.Generic;
 using System.Threading.Tasks;
+using NewsFood.Core.Interface.Bussiness;
 
 namespace NewsFood.Api.Controllers
 {
@@ -20,7 +20,8 @@ namespace NewsFood.Api.Controllers
         [HttpGet]
         public async Task<IActionResult> Get()
         {
-            return Ok(await _newsService.GetAllNewsService());
+            return Ok(await _newsService.GetAllNewsServiceAsync());
         }
+
     }
 }
