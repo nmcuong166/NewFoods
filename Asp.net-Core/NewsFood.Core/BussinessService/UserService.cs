@@ -1,4 +1,5 @@
-﻿using NewsFood.Core.Dto;
+﻿using NewsFood.Core.Common.Language;
+using NewsFood.Core.Dto;
 using NewsFood.Core.Dto.User;
 using NewsFood.Core.Entities;
 using NewsFood.Core.Interface.Auth;
@@ -22,18 +23,19 @@ namespace NewsFood.Core.BussinessService
             _jwtFactory = jwtFactory;
         }
 
-        public async Task<bool> HandleRegisterUserAsync(RegisterUserDto userDto)
+        public async Task<CreateUserRespone> HandleRegisterUserAsync(RegisterUserDto userDto)
         {
             var resultUser = await _userRepository.Create(new User(userDto.Email, userDto.UserName), userDto.Password);
             if (resultUser.Success)
             {
                 var claim = new Claim(ClaimTypes.Role, "User");
                 var rsClaims = await _userRepository.InsertClaims(new User(userDto.Email, userDto.UserName), claim);
+                return new CreateUserRespone(resultUser.Id, resultUser.Success);
             }
-            return resultUser.Success;
+            return new CreateUserRespone(resultUser.Id, resultUser.Success, resultUser.Errors);
         }
 
-        public async Task<bool> HandleRegisterAdminAsync(RegisterUserDto userDto)
+        public async Task<CreateUserRespone> HandleRegisterAdminAsync(RegisterUserDto userDto)
         {
             var user = new User(userDto.Email, userDto.UserName);
             var resultUser = await _userRepository.Create(user, userDto.Password);
@@ -42,7 +44,7 @@ namespace NewsFood.Core.BussinessService
                 var claim = new Claim(ClaimTypes.Role, "Admin");
                 var rsClaims = await _userRepository.InsertClaims(user, claim);
             }
-            return resultUser.Success;
+            return new CreateUserRespone(resultUser.Id, resultUser.Success, resultUser.Errors);
         }
 
         public async Task<LoginRespone> HandleLoginAccountAsync(LoginRequest message)
@@ -57,8 +59,9 @@ namespace NewsFood.Core.BussinessService
                     var token = await _jwtFactory.GenerateToken(user.Id, user.UserName, claims);
                     return new LoginRespone(token, true);
                 }
+                return new LoginRespone(new List<Error> { ErrorMessage.GetErrorInvaildMessage() }, null);
             }
-            return new LoginRespone(null, false);
+            return new LoginRespone(new List<Error> { ErrorMessage.GetErrorInvaildMessage() }, null);
         }
     }
 }

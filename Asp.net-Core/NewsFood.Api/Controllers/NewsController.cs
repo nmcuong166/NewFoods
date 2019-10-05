@@ -18,8 +18,10 @@ namespace NewsFood.Api.Controllers
 
         [Authorize]
         [HttpGet]
-        public async Task<IActionResult> Get()
+        public async Task<ActionResult> Get()
         {
+            var content = new ContentResult();
+            //content.StatusCode = StatusCode()
             return Ok(await _newsService.GetAllNewsServiceAsync());
         }
 

@@ -29,7 +29,7 @@ namespace NewFood.Infurstructure.Data.Repository
         public async Task<bool> CheckPassword(User user, string password)
         {
             var appUser = _mapper.Map<AppUsers>(user);
-            var rs =  await _userManager.CheckPasswordAsync(appUser, password);
+            var rs = await _userManager.CheckPasswordAsync(appUser, password);
             return rs;
         }
 
@@ -57,10 +57,10 @@ namespace NewFood.Infurstructure.Data.Repository
 
         public async Task<CreateUserRespone> InsertClaims(User user, Claim claim)
         {
-                var username = user.UserName;
-                var userById = await _userManager.FindByNameAsync(user.UserName);
-                var result = await _userManager.AddClaimAsync(userById, claim);
-                return new CreateUserRespone(userById.Id, result.Succeeded, result.Succeeded ? null : result.Errors.Select(s => new Error { Code = s.Code, Description = s.Description }));
+            var username = user.UserName;
+            var userById = await _userManager.FindByNameAsync(user.UserName);
+            var result = await _userManager.AddClaimAsync(userById, claim);
+            return new CreateUserRespone(userById.Id, result.Succeeded, result.Succeeded ? null : result.Errors.Select(s => new Error { Code = s.Code, Description = s.Description }));
         }
     }
 }
