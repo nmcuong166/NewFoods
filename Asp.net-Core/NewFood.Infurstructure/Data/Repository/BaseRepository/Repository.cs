@@ -61,6 +61,10 @@ namespace NewFood.Infurstructure.Data.Repository
         public void DeleteAsync(TEntity entity)
         {
             _dbContext.Entry(entity).State = Microsoft.EntityFrameworkCore.EntityState.Modified;
+        }
+
+        public void SaveChangeAsync()
+        {
             _dbContext.SaveChangesAsync();
         }
     }

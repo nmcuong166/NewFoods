@@ -17,5 +17,6 @@ namespace NewsFood.Core
         void UpdateAsync(TEntity entity);
         void Delete(TEntity entity);
         void DeleteAsync(TEntity entity);
+        void SaveChangeAsync();
     }
 }
