@@ -25,5 +25,7 @@ https://jasonwatmore.com/post/2018/08/14/aspnet-core-21-jwt-authentication-tutor
 https://docs.microsoft.com/en-us/aspnet/core/security/authorization/roles?view=aspnetcore-2.2
 https://github.com/blowdart/AspNetAuthorizationWorkshop
 
-Angular
+Angular 8
+- Document for Angular 
+https://angular.io/
 
