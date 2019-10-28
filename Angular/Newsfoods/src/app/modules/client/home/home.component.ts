@@ -15,13 +15,16 @@ export class HomeComponent implements OnInit {
     this.GetAllValues();
   }
 
-  private GetAllValues() : void{
+  private GetAllValues(): void {
     this.valueService.getAll().subscribe(
       sucess => {
+        console.log(sucess);
+
         return this.data = sucess;
       });
   }
-
- 
-
 }
+
+
+
+

@@ -10,6 +10,6 @@ export class ValueService {
     constructor(private http: HttpClient){}
 
     getAll(): Observable<any>{
-        return this.http.get<any>(`${environment.apiUrl}/api/Values`);
+        return this.http.get<any>(`${environment.url}/api/Values`);
     }
 }
