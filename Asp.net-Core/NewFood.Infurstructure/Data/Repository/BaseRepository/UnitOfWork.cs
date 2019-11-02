@@ -1,12 +1,9 @@
 ﻿using NewFood.Infurstructure.Data.EntityFramework;
 using NewsFood.Core;
-using NewsFood.Core.BussinessService;
-using NewsFood.Core.Entities.BaseEntities;
 using NewsFood.Core.Interface.Repository;
 using System;
 using System.Collections;
-using System.Collections.Generic;
-using System.Text;
+using System.Threading.Tasks;
 
 namespace NewFood.Infurstructure.Data.Repository
 {
@@ -36,9 +33,14 @@ namespace NewFood.Infurstructure.Data.Repository
         /// Saves all pending changes
         /// </summary>
         /// <returns>The number of objects in an Added, Modified, or Deleted state</returns>
-        public int Commit()
+        public int SaveChange()
         {
            return _dbContext.SaveChanges();
+        }
+
+        public Task<int> SaveChangeAsync()
+        {
+            return _dbContext.SaveChangesAsync();
         }
 
         /// <summary>

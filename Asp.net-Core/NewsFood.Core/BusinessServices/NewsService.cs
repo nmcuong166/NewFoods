@@ -8,15 +8,17 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace NewsFood.Core.BussinessService
+namespace NewsFood.Core.BusinessServices
 {
     public class NewsService : INewsService
     {
         private readonly INewsRepository _newsRepository;
+        private readonly IUnitOfWork _unitOfWork;
 
-        public NewsService(INewsRepository newsRepository)
+        public NewsService(INewsRepository newsRepository, IUnitOfWork unitOfWork)
         {
             _newsRepository = newsRepository;
+            _unitOfWork = unitOfWork;
         }
 
         public async Task<IEnumerable<NewsDto>> GetAllNewsServiceAsync()

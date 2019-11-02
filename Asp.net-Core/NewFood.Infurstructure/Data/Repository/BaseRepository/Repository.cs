@@ -1,4 +1,5 @@
-﻿using NewFood.Infurstructure.Data.EntityFramework;
+﻿using Microsoft.EntityFrameworkCore;
+using NewFood.Infurstructure.Data.EntityFramework;
 using NewsFood.Core;
 using NewsFood.Core.Entities.BaseEntities;
 using System;
@@ -11,61 +12,42 @@ namespace NewFood.Infurstructure.Data.Repository
 {
     public class Repository<TEntity> : IRepository<TEntity> where TEntity : Entity
     {
-        public readonly ApplicationDbContext _dbContext;
+        private readonly DbSet<TEntity> _dbSet;
+        private readonly ApplicationDbContext _dbContext;
 
         public Repository(ApplicationDbContext dbContext)
         {
+            _dbSet = dbContext.Set<TEntity>();
             _dbContext = dbContext;
         }
 
         public IQueryable<TEntity> GetAll()
         {
-            return _dbContext.Set<TEntity>().AsQueryable();
+            return _dbSet;
         }
 
         public async Task<TEntity> GetAsync(long id)
         {
-            return await _dbContext.Set<TEntity>().FindAsync(id);
+            return await _dbSet.FindAsync(id);
         }
 
-        public void Insert(TEntity entity)
+        public TEntity Insert(TEntity entity)
         {
-            _dbContext.Set<TEntity>().Add(entity);
-            _dbContext.SaveChanges();
+            var rs = _dbSet.Add(entity);
+            return rs.Entity;
         }
 
         public void Update(TEntity entity)
         {
+            _dbContext.Attach(entity);
             _dbContext.Entry(entity).State = Microsoft.EntityFrameworkCore.EntityState.Modified;
-            _dbContext.SaveChanges();
         }
 
         public void Delete(TEntity entity)
         {
             _dbContext.Entry(entity).State = Microsoft.EntityFrameworkCore.EntityState.Deleted;
-            _dbContext.SaveChanges();
+            _dbContext.Remove(entity);
         }
 
-        public void InsertAsync(TEntity entity)
-        {
-            _dbContext.Set<TEntity>().Add(entity);
-            _dbContext.SaveChangesAsync();
-        }
-
-        public void UpdateAsync(TEntity entity)
-        {
-            _dbContext.Entry(entity).State = Microsoft.EntityFrameworkCore.EntityState.Modified;
-            _dbContext.SaveChangesAsync();
-        }
-
-        public void DeleteAsync(TEntity entity)
-        {
-            _dbContext.Entry(entity).State = Microsoft.EntityFrameworkCore.EntityState.Modified;
-        }
-
-        public void SaveChangeAsync()
-        {
-            _dbContext.SaveChangesAsync();
-        }
     }
 }
