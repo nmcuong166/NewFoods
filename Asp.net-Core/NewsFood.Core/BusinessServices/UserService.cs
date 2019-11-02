@@ -11,7 +11,7 @@ using System.Security.Claims;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace NewsFood.Core.BussinessService
+namespace NewsFood.Core.BusinessServices
 {
     public class UserService : IUserService
     {

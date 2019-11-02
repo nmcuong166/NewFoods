@@ -51,7 +51,6 @@ namespace NewFood.Infurstructure.Data.Repository
         {
             var appUser = _mapper.Map<AppUsers>(user);
             var result = await _userManager.GetClaimsAsync(appUser);
-
             return result.ToList();
         }
 

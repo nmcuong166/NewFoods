@@ -1,15 +1,12 @@
 ﻿using Microsoft.EntityFrameworkCore;
-using NewsFood.Core.BussinessService;
 using NewsFood.Core.Entities;
 using NewsFood.Core.Interface.Repository;
-using System;
 using System.Collections.Generic;
-using System.Text;
 using System.Threading.Tasks;
 
 namespace NewFood.Infurstructure.Data.Repository
 {
-    public class NewsRepository : INewsRepository
+    public class NewsRepository<TEntity>
     {
         private readonly IUnitOfWork _unitOfWork;
         public NewsRepository(IUnitOfWork unitOfWork)
