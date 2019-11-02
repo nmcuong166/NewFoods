@@ -9,7 +9,7 @@ using System.Threading.Tasks;
 
 namespace NewFood.Infurstructure.Data.Repository.BaseRepository
 {
-    public class BaseRepository<TEntity> where TEntity : BaseEntity
+    public class BaseRepository<TEntity> : IBaseRepository<TEntity> where TEntity : BaseEntity
     {
         protected readonly IUnitOfWork _unitOfWork;
         public BaseRepository(IUnitOfWork unitOfWork)
@@ -17,14 +17,14 @@ namespace NewFood.Infurstructure.Data.Repository.BaseRepository
             _unitOfWork = unitOfWork;
         }
 
-        public virtual async Task<int> InsertAsync(TEntity entity)
+        public async Task<int> InsertAsync(TEntity entity)
         {
             _unitOfWork.Repository<TEntity>().Insert(entity);
             var result = await _unitOfWork.SaveChangeAsync();
             return result;
         }
 
-        public virtual async Task<int> DeleteSoft(TEntity entity)
+        public async Task<int> DeleteSoft(TEntity entity)
         {
             entity.IsDeleted = true;
             _unitOfWork.Repository<TEntity>().Update(entity);
@@ -32,7 +32,7 @@ namespace NewFood.Infurstructure.Data.Repository.BaseRepository
             return result;
         }
 
-        public virtual async Task<bool> Delete(TEntity entity)
+        public async Task<bool> Delete(TEntity entity)
         {
             _unitOfWork.Repository<TEntity>().Delete(entity);
             var result = await _unitOfWork.SaveChangeAsync();
@@ -43,7 +43,7 @@ namespace NewFood.Infurstructure.Data.Repository.BaseRepository
             return false;
         }
 
-        public virtual async Task<int> UpdateAsync(TEntity entity)
+        public async Task<int> UpdateAsync(TEntity entity)
         {
             _unitOfWork.Repository<TEntity>().Update(entity);
             var result = await _unitOfWork.SaveChangeAsync();

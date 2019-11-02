@@ -1,10 +1,11 @@
-﻿using System;
+﻿using NewsFood.Core.Interface.BaseEntity;
+using System;
 using System.Collections.Generic;
 using System.Text;
 
 namespace NewsFood.Core.Entities.BaseEntities
 {
-    public interface IBaseEntity
+    public interface IBaseEntity : IEntity
     {
         bool IsDeleted { get; set; } 
         long? CreatorUserId { get; set; }

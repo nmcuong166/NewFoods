@@ -28,7 +28,6 @@ namespace NewsFood.Api.Controllers
         public async Task<ActionResult> Get()
         {
             var content = new ContentResult();
-            //content.StatusCode = StatusCode()
             return Ok(await _newsService.GetAllNewsServiceAsync());
         }
 
