@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace NewFood.Infurstructure.Data.Repository
 {
-    public class NewsRepository<TEntity>
+    public class NewsRepository
     {
         private readonly IUnitOfWork _unitOfWork;
         public NewsRepository(IUnitOfWork unitOfWork)
