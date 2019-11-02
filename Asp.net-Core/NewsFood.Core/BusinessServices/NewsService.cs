@@ -12,10 +12,10 @@ namespace NewsFood.Core.BusinessServices
 {
     public class NewsService : INewsService
     {
-        private readonly INewsRepository _newsRepository;
+        private readonly INewsRepository<News> _newsRepository;
         private readonly IUnitOfWork _unitOfWork;
 
-        public NewsService(INewsRepository newsRepository, IUnitOfWork unitOfWork)
+        public NewsService(INewsRepository<News> newsRepository, IUnitOfWork unitOfWork)
         {
             _newsRepository = newsRepository;
             _unitOfWork = unitOfWork;

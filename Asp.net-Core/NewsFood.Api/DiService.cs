@@ -23,9 +23,8 @@ namespace NewsFood.Api
                 services.AddScoped(typeof(UserManager<AppUsers>)),
                 services.AddScoped(typeof(RoleManager<AppRoles>)),
                 services.AddTransient(typeof(IJWTFactory), typeof(JWTFactory)),
-                //services.AddTransient(typeof(IRepository<>), typeof(Repository<>)),
                 services.AddTransient(typeof(MyIdentityDataInitializer)),
-                services.AddTransient(typeof(INewsRepository), typeof(NewsRepository)),
+                services.AddTransient(typeof(INewsRepository<>), typeof(NewsRepository<>)),
                 services.AddTransient(typeof(IUserRepository), typeof(UserRepository)),
 
                 //Bussiness Service
