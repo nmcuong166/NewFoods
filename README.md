@@ -28,7 +28,8 @@ https://github.com/blowdart/AspNetAuthorizationWorkshop
 - Nlog:
 https://docs.microsoft.com/en-us/aspnet/core/fundamentals/logging/?view=aspnetcore-3.0
 
--Ilogger: https://docs.microsoft.com/en-us/aspnet/core/fundamentals/logging/?view=aspnetcore-3.0
+- Ilogger:
+https://docs.microsoft.com/en-us/aspnet/core/fundamentals/logging/?view=aspnetcore-3.0
 
 Angular 8
 - Document for Angular 
