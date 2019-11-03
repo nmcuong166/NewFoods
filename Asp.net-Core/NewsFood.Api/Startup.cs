@@ -21,12 +21,14 @@ namespace NewsFood.Api
 {
     public class Startup
     {
-        public Startup(IConfiguration configuration)
+        public IConfiguration Configuration { get; }
+        public IHostingEnvironment Environment { get; }
+
+        public Startup(IConfiguration configuration, IHostingEnvironment environment)
         {
             Configuration = configuration;
+            Environment = environment;
         }
-
-        public IConfiguration Configuration { get; }
 
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
@@ -34,13 +36,14 @@ namespace NewsFood.Api
             var key = Encoding.ASCII.GetBytes("SOME_RANDOM_KEY_DO_NOT_SHARE");
 
             //this service sets connect database from appsettings.json
-            var optionBuilder = services.AddDbContext<ApplicationDbContext>(option =>
+            var optionBuilder = services.AddDbContext<ApplicationDbContext>((httpcontext, option) =>
             {
                 option.UseSqlServer(Configuration["Data:NewsFood:ConnectionString"]);
-                option.EnableSensitiveDataLogging();
+                if (Environment.IsDevelopment())
+                {
+                    option.EnableSensitiveDataLogging();
+                }
             },ServiceLifetime.Singleton);
-
-
 
             //this services sets Identity
             services.AddIdentity<AppUsers, AppRoles>(options =>
@@ -51,8 +54,8 @@ namespace NewsFood.Api
                 options.Password.RequireNonAlphanumeric = false;
                 options.Password.RequireUppercase = false;
             })
-                    .AddEntityFrameworkStores<ApplicationDbContext>()
-                    .AddDefaultTokenProviders();
+               .AddEntityFrameworkStores<ApplicationDbContext>()
+               .AddDefaultTokenProviders();
 
             //this services set JWT Token 
             services.AddAuthentication(x =>
