@@ -7,6 +7,10 @@ import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { JwtInterceptor } from './shared/common/jwt.interceptor';
 import { ErrorInterceptor } from './shared/common/error.interceptor';
+import { ClientModule } from './modules/client/client.module';
+
+
+
 
 
 @NgModule({
@@ -18,7 +22,10 @@ import { ErrorInterceptor } from './shared/common/error.interceptor';
     FormsModule,
     HttpClientModule,
     AppRoutingModule,
-    ReactiveFormsModule
+    ReactiveFormsModule,
+    ClientModule
+  ],
+  exports: [
   ],
   providers: [
     { provide: HTTP_INTERCEPTORS, useClass: JwtInterceptor, multi: true },
