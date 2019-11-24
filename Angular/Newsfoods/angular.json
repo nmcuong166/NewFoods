@@ -25,10 +25,10 @@
             "aot": false,
             "assets": [
               "src/favicon.ico",
-              "src/assets"
+              "src/assets"        
             ],
             "styles": [
-              "src/styles.scss"
+              "src/styles.scss"                     
             ],
             "scripts": []
           },
@@ -232,6 +232,7 @@
           }
         }
       }
-    }},
+    }
+  },
   "defaultProject": "Newsfoods"
 }
