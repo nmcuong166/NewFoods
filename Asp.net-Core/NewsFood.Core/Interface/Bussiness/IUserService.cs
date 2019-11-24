@@ -9,8 +9,8 @@ namespace NewsFood.Core.Interface.Bussiness
 {
     public interface IUserService
     {
-        Task<bool> HandleRegisterUserAsync(RegisterUserDto user);
-        Task<bool> HandleRegisterAdminAsync(RegisterUserDto userDto);
+        Task<CreateUserRespone> HandleRegisterUserAsync(RegisterUserDto user);
+        Task<CreateUserRespone> HandleRegisterAdminAsync(RegisterUserDto userDto);
         Task<LoginRespone> HandleLoginAccountAsync(LoginRequest message);
     }
 }

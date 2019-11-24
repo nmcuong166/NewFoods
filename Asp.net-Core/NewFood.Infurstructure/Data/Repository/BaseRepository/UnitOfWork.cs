@@ -2,6 +2,7 @@
 using NewsFood.Core;
 using NewsFood.Core.BussinessService;
 using NewsFood.Core.Entities.BaseEntities;
+using NewsFood.Core.Interface.Repository;
 using System;
 using System.Collections;
 using System.Collections.Generic;

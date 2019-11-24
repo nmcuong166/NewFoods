@@ -11,5 +11,6 @@ namespace NewsFood.Core.Dto
         // Summary:
         //     Gets or sets the description for this error.
         public string Description { get; set; }
+
     }
 }
