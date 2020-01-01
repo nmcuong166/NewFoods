@@ -120,7 +120,9 @@ namespace NewsFood.Api
                 routes.MapRoute("default", "{controller=Home}/{action=Index}/{id?}");
             });
             myIdentityData.SeedAdminUser();
+            myIdentityData.SeedCategories();
             app.UseMvc();
+        
         }
 
     }

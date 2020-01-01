@@ -16,7 +16,7 @@ namespace NewsFood.Api
     {
         public static IList<IServiceCollection> DIServiceExtension(this IServiceCollection services)
         {
-            IList<IServiceCollection> list = new List<IServiceCollection>
+            IList<IServiceCollection> listRegisterDI = new List<IServiceCollection>
             {
                 //Infurstructre
                 services.AddSingleton(typeof(IUnitOfWork), typeof(UnitOfWork)),
@@ -26,12 +26,14 @@ namespace NewsFood.Api
                 services.AddTransient(typeof(MyIdentityDataInitializer)),
                 services.AddTransient(typeof(INewsRepository<>), typeof(NewsRepository<>)),
                 services.AddTransient(typeof(IUserRepository), typeof(UserRepository)),
+                services.AddTransient(typeof(ICategoriesRepository<>), typeof(CategoriesRepository<>)),
 
                 //Bussiness Service
                 services.AddTransient(typeof(INewsService), typeof(NewsService)),
-                services.AddTransient(typeof(IUserService), typeof(UserService))
+                services.AddTransient(typeof(IUserService), typeof(UserService)),
+                services.AddTransient(typeof(ICategoriesService), typeof(CategoriesService))
             };
-            return list;
+            return listRegisterDI;
         }
     }
 }

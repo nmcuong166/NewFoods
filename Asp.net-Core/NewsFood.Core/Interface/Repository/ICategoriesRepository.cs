@@ -5,8 +5,8 @@ using System.Threading.Tasks;
 
 namespace NewsFood.Core.Interface.Repository
 {
-    public interface INewsRepository<TEntity> : IBaseRepository<TEntity> where TEntity : IBaseEntity
+    public interface ICategoriesRepository<TEntity> : IBaseRepository<TEntity> where TEntity : IBaseEntity
     {
-        Task<IEnumerable<News>> GetAll();
+        Task<List<Categories>> GetCategories();
     }
 }

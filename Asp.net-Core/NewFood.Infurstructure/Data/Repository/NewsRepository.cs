@@ -11,8 +11,7 @@ namespace NewFood.Infurstructure.Data.Repository
     public class NewsRepository<TEntity> : BaseRepository<TEntity>, INewsRepository<TEntity> where TEntity : BaseEntity
     {
         public NewsRepository(IUnitOfWork unitOfWork) : base(unitOfWork)
-        {
-        }
+        {}
 
         public async Task<IEnumerable<News>> GetAll()
         {
