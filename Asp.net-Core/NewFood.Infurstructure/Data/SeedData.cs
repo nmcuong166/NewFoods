@@ -37,5 +37,42 @@ namespace NewFood.Infurstructure.Data
                 var ef = _userManager.AddClaimAsync(user, new Claim(ClaimTypes.Role, "SuperAdmin")).Result;
             }
         }
+
+        public void SeedCategories()
+        {
+            var categories = new List<Categories>() {
+                new Categories {
+                    Title = "Home",
+                    ParentId = null,
+                },
+                new Categories
+                {
+                    Title = "Archive",
+                    ParentId = null,
+                },
+                new Categories
+                {
+                    Title = "Pages",
+                    ParentId = null,
+                },
+                new Categories
+                {
+                    Title = "Mega",
+                    ParentId = null,
+                },
+                new Categories
+                {
+                    Title = "About",
+                    ParentId = null,
+                }
+            };
+
+            if (!_context.Categories.AsNoTracking().Any())
+            {
+                _context.Categories.AddRange(categories);
+                _context.SaveChanges();
+            }
+        }
+
     }
 }

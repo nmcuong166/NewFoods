@@ -8,7 +8,7 @@ namespace NewFood.Infurstructure.Data.Entities
 {
     public class AppUsers : IdentityUser<long>, IBaseEntity
     {
-        public bool IsDeleted { get; set; } = false;
+        public bool IsDeleted { get; set; }
         public long? CreatorUserId { get; set; }
         public DateTime CreationTime { get; set; }
         public DateTime ModifiedTime { get; set; }

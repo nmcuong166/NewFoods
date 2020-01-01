@@ -15,6 +15,7 @@ namespace NewFood.Infurstructure.Data.EntityFramework
     public class ApplicationDbContext : IdentityDbContext<AppUsers, AppRoles, long>
     {
         public virtual DbSet<News> News { get; set; }
+        public virtual DbSet<Categories> Categories { get; set; }
 
         public ApplicationDbContext(DbContextOptions<ApplicationDbContext> options) : base(options)
         {
@@ -35,6 +36,7 @@ namespace NewFood.Infurstructure.Data.EntityFramework
 
         protected override void OnModelCreating(ModelBuilder builder)
         {
+            builder.Entity<Categories>().Property(s => s.ParentId).IsRequired(false);
             base.OnModelCreating(builder);
             //SeedData(builder);
         }
@@ -49,14 +51,21 @@ namespace NewFood.Infurstructure.Data.EntityFramework
 
         private void AddInfo()
         {
-            var entries = ChangeTracker.Entries().Where(x => x.Entity is IBaseEntity && (x.State == EntityState.Added || x.State == EntityState.Modified));
+            var entries = ChangeTracker.Entries().Where(x => x.Entity is IBaseEntity && (x.State == EntityState.Added || x.State == EntityState.Modified || x.State == EntityState.Deleted));
             foreach (var entry in entries)
             {
                 if (entry.State == EntityState.Added)
                 {
                     ((IBaseEntity)entry.Entity).CreationTime = DateTime.UtcNow;
                 }
-                ((IBaseEntity)entry.Entity).ModifiedTime = DateTime.UtcNow;
+                else if (entry.State == EntityState.Modified)
+                {
+                    ((IBaseEntity)entry.Entity).ModifiedTime = DateTime.UtcNow;
+                }
+                else
+                {
+                    ((IBaseEntity)entry.Entity).DeletedTime = DateTime.UtcNow;
+                }
             }
         }
     }
