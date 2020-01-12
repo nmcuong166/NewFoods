@@ -23,33 +23,38 @@ namespace NewsFood.Infurstructure.Auth
 
         public async Task<Token> GenerateToken(long id, string userName, [Optional]List<Claim> claims)
         {
-            var localClaims = new List<Claim>   
+            var task = Task.Run<Token>(() =>
             {
-                new Claim(JwtRegisteredClaimNames.Jti, Guid.NewGuid().ToString()),
-                new Claim(JwtRegisteredClaimNames.Sub, userName),
-                new Claim(ClaimTypes.NameIdentifier, id.ToString()),
-            };
+                var localClaims = new List<Claim>
+                {
+                    new Claim(JwtRegisteredClaimNames.Jti, Guid.NewGuid().ToString()),
+                    new Claim(JwtRegisteredClaimNames.Sub, userName),
+                    new Claim(ClaimTypes.NameIdentifier, id.ToString()),
+                };
 
-            if (!claims.IsNullOrEmpty())
-            {
-                claims.ForEach(s => localClaims.Add(s));
-            }
+                if (!claims.IsNullOrEmpty())
+                {
+                    claims.ForEach(s => localClaims.Add(s));
+                }
 
-            var tokenHandler = new JwtSecurityTokenHandler();
-            var key = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(_configuration["JWT:JwtKey"]));
-            var creds = new SigningCredentials(key, SecurityAlgorithms.HmacSha256Signature);
-            var expires = DateTime.Now.AddDays(7);
-            var tokenDescriptor = new SecurityTokenDescriptor
-            {
-                Subject = new ClaimsIdentity(localClaims),
-                Expires = expires,
-                SigningCredentials = creds
-                
-            };
+                var tokenHandler = new JwtSecurityTokenHandler();
+                var key = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(_configuration["JWT:JwtKey"]));
+                var creds = new SigningCredentials(key, SecurityAlgorithms.HmacSha256Signature);
+                var expires = DateTime.Now.AddDays(7);
+                var tokenDescriptor = new SecurityTokenDescriptor
+                {
+                    Subject = new ClaimsIdentity(localClaims),
+                    Expires = expires,
+                    SigningCredentials = creds
 
-            var token = tokenHandler.CreateToken(tokenDescriptor);
-            var encoded = tokenHandler.WriteToken(token);
-            return new Token(id, encoded, expires.Day);
+                };
+
+                var token = tokenHandler.CreateToken(tokenDescriptor);
+                var encoded = tokenHandler.WriteToken(token);
+                return new Token(id, encoded, expires.Day);
+            });
+
+            return await task;
         }
 
     }

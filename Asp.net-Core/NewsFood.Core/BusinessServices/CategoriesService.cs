@@ -13,9 +13,7 @@ namespace NewsFood.Core.BusinessServices
     public class CategoriesService : ICategoriesService
     {
         private readonly ICategoriesRepository<Categories> _categoriesRepository;
-        public CategoriesService(
-            ICategoriesRepository<Categories> categoriesRepository
-            )
+        public CategoriesService(ICategoriesRepository<Categories> categoriesRepository)
         {
             _categoriesRepository = categoriesRepository;
         }
@@ -49,7 +47,6 @@ namespace NewsFood.Core.BusinessServices
                     }
                 }
             }
-
             return listCategories;
         }
 
