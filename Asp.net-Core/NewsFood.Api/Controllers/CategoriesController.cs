@@ -32,16 +32,10 @@ namespace NewsFood.Api.Controllers
         [HttpGet]
         public async Task<ActionResult> GetCategories()
         {
-            var stopwatch = new System.Diagnostics.Stopwatch();
-            stopwatch.Start();
             var result = await _inmemoryCacheService.GetOrCreateAsync<List<CategoriesRespone>>(CacheKey.CategoriesEntry, () => _categoriesService.GetCategoriesFromDb());
-            //var result = await _categoriesService.GetCategoriesFromDb();
             if (result.Any())
-            { 
-                var a = new JsonContentResult<List<CategoriesRespone>>(result, new BaseRespone(true));
-                stopwatch.Stop();
-                var b = stopwatch.ElapsedMilliseconds;
-                return a;
+            {
+                return new JsonContentResult<List<CategoriesRespone>>(result, new BaseRespone(true));
             }
             return new JsonContentResult<List<CategoriesRespone>>(new BaseRespone(false));
         }
