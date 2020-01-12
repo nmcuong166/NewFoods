@@ -30,18 +30,5 @@ namespace NewsFood.Api.Controllers
             var content = new ContentResult();
             return Ok(await _newsService.GetAllNewsServiceAsync());
         }
-
-        [AllowAnonymous]
-        [HttpGet("CheckTransaction")]
-        public async Task<ActionResult> GetUpdate()
-        {
-            var news = new News { Contens = "Nguyen manh Cuong" };
-            var rs = _unitOfWork.Repository<News>().Insert(news);
-            var newsDetail = new NewsDetails { NewsId = 100, Contents = "Detail cua news" };
-            _unitOfWork.Repository<NewsDetails>().Insert(newsDetail);
-            var number = await _unitOfWork.SaveChangeAsync();
-            return Ok();
-        }
-
     }
 }

@@ -15,7 +15,8 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\NewFood.Infurstructure\NewFood.Infurstructure.csproj" />
+    <ProjectReference Include="..\NewsFood.Core\NewsFood.Core.csproj" />
+    <ProjectReference Include="..\NewsFood.Infurstructure\NewsFood.Infurstructure.csproj" />
   </ItemGroup>
 
 </Project>
