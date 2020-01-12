@@ -1,11 +1,11 @@
-﻿using NewFood.Infurstructure.Data.EntityFramework;
+﻿using NewsFood.Infurstructure.Data.EntityFramework;
 using NewsFood.Core;
 using NewsFood.Core.Interface.Repository;
 using System;
 using System.Collections;
 using System.Threading.Tasks;
 
-namespace NewFood.Infurstructure.Data.Repository
+namespace NewsFood.Infurstructure.Data.Repository
 {
     public sealed class UnitOfWork : IUnitOfWork
     {

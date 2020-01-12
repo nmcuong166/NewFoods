@@ -7,7 +7,7 @@ using System.Collections.Generic;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace NewFood.Infurstructure.Data.Repository.BaseRepository
+namespace NewsFood.Infurstructure.Data.Repository.BaseRepository
 {
     public class BaseRepository<TEntity> : IBaseRepository<TEntity> where TEntity : BaseEntity
     {

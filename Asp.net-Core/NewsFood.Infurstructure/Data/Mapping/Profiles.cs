@@ -1,11 +1,11 @@
 ﻿using AutoMapper;
-using NewFood.Infurstructure.Data.Entities;
+using NewsFood.Infurstructure.Data.Entities;
 using NewsFood.Core.Entities;
 using System;
 using System.Collections.Generic;
 using System.Text;
 
-namespace NewFood.Infurstructure.Data.Mapping
+namespace NewsFood.Infurstructure.Data.Mapping
 {
     public class DataProfiles : Profile
     {

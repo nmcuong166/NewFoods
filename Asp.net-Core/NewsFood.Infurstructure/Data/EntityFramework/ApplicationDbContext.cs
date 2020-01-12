@@ -1,6 +1,6 @@
 ﻿using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
-using NewFood.Infurstructure.Data.Entities;
+using NewsFood.Infurstructure.Data.Entities;
 using NewsFood.Core.Entities;
 using NewsFood.Core.Entities.BaseEntities;
 using System;
@@ -10,7 +10,7 @@ using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 
-namespace NewFood.Infurstructure.Data.EntityFramework
+namespace NewsFood.Infurstructure.Data.EntityFramework
 {
     public class ApplicationDbContext : IdentityDbContext<AppUsers, AppRoles, long>
     {

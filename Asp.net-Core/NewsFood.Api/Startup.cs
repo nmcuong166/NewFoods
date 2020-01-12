@@ -8,12 +8,12 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.IdentityModel.Tokens;
-using NewFood.Infurstructure.Data.Entities;
-using NewFood.Infurstructure.Data.EntityFramework;
+using NewsFood.Infurstructure.Data.Entities;
+using NewsFood.Infurstructure.Data.EntityFramework;
 using Swashbuckle.AspNetCore.Swagger;
-using NewFood.Infurstructure.Data.Mapping;
+using NewsFood.Infurstructure.Data.Mapping;
 using System.Text;
-using NewFood.Infurstructure.Data;
+using NewsFood.Infurstructure.Data;
 using System.Diagnostics;
 using System.IO;
 

@@ -1,5 +1,5 @@
 ﻿using Microsoft.EntityFrameworkCore;
-using NewFood.Infurstructure.Data.EntityFramework;
+using NewsFood.Infurstructure.Data.EntityFramework;
 using NewsFood.Core;
 using NewsFood.Core.Entities.BaseEntities;
 using System;
@@ -8,7 +8,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace NewFood.Infurstructure.Data.Repository
+namespace NewsFood.Infurstructure.Data.Repository
 {
     public class Repository<TEntity> : IRepository<TEntity> where TEntity : Entity
     {

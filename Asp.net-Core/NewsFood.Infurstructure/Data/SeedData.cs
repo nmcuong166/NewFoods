@@ -1,7 +1,7 @@
 ﻿using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
-using NewFood.Infurstructure.Data.Entities;
-using NewFood.Infurstructure.Data.EntityFramework;
+using NewsFood.Infurstructure.Data.Entities;
+using NewsFood.Infurstructure.Data.EntityFramework;
 using NewsFood.Core.Entities;
 using System;
 using System.Collections.Generic;
@@ -9,7 +9,7 @@ using System.Linq;
 using System.Security.Claims;
 using System.Text;
 
-namespace NewFood.Infurstructure.Data
+namespace NewsFood.Infurstructure.Data
 {
     public class MyIdentityDataInitializer
     {

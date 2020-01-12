@@ -11,7 +11,7 @@ using System.Security.Claims;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace NewFood.Infurstructure.Auth
+namespace NewsFood.Infurstructure.Auth
 {
     public class JWTFactory : IJWTFactory
     {
@@ -23,7 +23,7 @@ namespace NewFood.Infurstructure.Auth
 
         public async Task<Token> GenerateToken(long id, string userName, [Optional]List<Claim> claims)
         {
-            var localClaims = new List<Claim>
+            var localClaims = new List<Claim>   
             {
                 new Claim(JwtRegisteredClaimNames.Jti, Guid.NewGuid().ToString()),
                 new Claim(JwtRegisteredClaimNames.Sub, userName),

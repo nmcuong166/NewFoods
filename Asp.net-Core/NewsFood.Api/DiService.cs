@@ -1,9 +1,9 @@
 ﻿using Microsoft.AspNetCore.Identity;
 using Microsoft.Extensions.DependencyInjection;
-using NewFood.Infurstructure.Auth;
-using NewFood.Infurstructure.Data;
-using NewFood.Infurstructure.Data.Entities;
-using NewFood.Infurstructure.Data.Repository;
+using NewsFood.Infurstructure.Auth;
+using NewsFood.Infurstructure.Data;
+using NewsFood.Infurstructure.Data.Entities;
+using NewsFood.Infurstructure.Data.Repository;
 using NewsFood.Core.BusinessServices;
 using NewsFood.Core.Interface.Auth;
 using NewsFood.Core.Interface.Bussiness;

@@ -1,6 +1,6 @@
 ﻿using AutoMapper;
 using Microsoft.AspNetCore.Identity;
-using NewFood.Infurstructure.Data.Entities;
+using NewsFood.Infurstructure.Data.Entities;
 using NewsFood.Core.Dto;
 using NewsFood.Core.Dto.BussinessService;
 using NewsFood.Core.Dto.User;
@@ -13,7 +13,7 @@ using System.Security.Claims;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace NewFood.Infurstructure.Data.Repository
+namespace NewsFood.Infurstructure.Data.Repository
 {
     public class UserRepository : IUserRepository
     {

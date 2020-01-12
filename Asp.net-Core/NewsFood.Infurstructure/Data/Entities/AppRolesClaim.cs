@@ -3,7 +3,7 @@ using System;
 using System.Collections.Generic;
 using System.Text;
 
-namespace NewFood.Infurstructure.Data.Entities
+namespace NewsFood.Infurstructure.Data.Entities
 {
     public class AppRolesClaim : IdentityRoleClaim<long>
     {
