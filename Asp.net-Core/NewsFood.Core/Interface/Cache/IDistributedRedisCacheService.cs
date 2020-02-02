@@ -4,14 +4,14 @@ using System.Collections.Generic;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace NewsFood.Core.Interface.Services
+namespace NewsFood.Core.Interface.Cache
 {
-    public interface IInmemoryCacheService
+    public interface IDistributedRedisCacheService
     {
         Task<TEntity> GetOrCreateAsync<TEntity>(CacheKey cacheKey, Func<Task<TEntity>> entity);
 
-        void Remove<TEntity>(CacheKey cacheKey);
-        
-        TEntity Get<TEntity>(CacheKey cacheKey);
+        bool Remove<T>(CacheKey cacheKey);
+
+        Task<T> Get<T>(CacheKey cacheKey);
     }
 }

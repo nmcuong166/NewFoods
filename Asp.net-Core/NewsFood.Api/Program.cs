@@ -47,7 +47,6 @@ namespace NewsFood.Api
                {
                    logging.AddConsole();
                }
-             
            })
            .UseNLog();
     }

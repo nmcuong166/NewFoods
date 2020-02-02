@@ -83,6 +83,12 @@ namespace NewsFood.Api
 
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_2);
 
+            //Register Redis Cache
+            services.AddStackExchangeRedisCache(option => {
+                option.Configuration = Configuration["Cache:RedisCache:Configuration"];
+                option.InstanceName = Configuration["Cache:RedisCache:InstanceName"];
+            });
+
             // Register the Swagger generator, defining 1 or more Swagger documents
             services.AddSwaggerGen(c =>
             {

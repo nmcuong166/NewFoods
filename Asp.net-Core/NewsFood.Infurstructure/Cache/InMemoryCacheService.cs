@@ -1,12 +1,10 @@
 ﻿using Microsoft.Extensions.Caching.Memory;
 using NewsFood.Core.Common.Parameter;
-using NewsFood.Core.Interface.Services;
+using NewsFood.Core.Interface.Cache;
 using System;
-using System.Collections.Generic;
-using System.Text;
 using System.Threading.Tasks;
 
-namespace NewsFood.Core.BusinessServices
+namespace NewsFood.Infurstructure.Cache
 {
     public class InMemoryCacheService : IInmemoryCacheService
     {

@@ -9,7 +9,8 @@ using NewsFood.Core.Interface.Auth;
 using NewsFood.Core.Interface.Bussiness;
 using NewsFood.Core.Interface.Repository;
 using System.Collections.Generic;
-using NewsFood.Core.Interface.Services;
+using NewsFood.Core.Interface.Cache;
+using NewsFood.Infurstructure.Cache;
 
 namespace NewsFood.Api
 {
@@ -28,12 +29,13 @@ namespace NewsFood.Api
                 services.AddTransient(typeof(INewsRepository<>), typeof(NewsRepository<>)),
                 services.AddTransient(typeof(IUserRepository), typeof(UserRepository)),
                 services.AddTransient(typeof(ICategoriesRepository<>), typeof(CategoriesRepository<>)),
-
+                services.AddTransient(typeof(IInmemoryCacheService), typeof(InMemoryCacheService)),
+                services.AddTransient(typeof(IDistributedRedisCacheService), typeof(DistributedRedisCacheService)),
+                
                 //Bussiness Service
                 services.AddTransient(typeof(INewsService), typeof(NewsService)),
                 services.AddTransient(typeof(IUserService), typeof(UserService)),
                 services.AddTransient(typeof(ICategoriesService), typeof(CategoriesService)),
-                services.AddTransient(typeof(IInmemoryCacheService), typeof(InMemoryCacheService))
             };
             return listRegisterDI;
         }
