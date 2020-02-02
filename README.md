@@ -35,3 +35,6 @@ Angular 8
 - Document for Angular 
 https://angular.io/
 
+Redis Cache:
+-Setup: https://www.youtube.com/watch?v=ncFhlv-gBXQ
+
