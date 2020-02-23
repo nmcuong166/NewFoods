@@ -1,4 +1,5 @@
 ﻿using Microsoft.Extensions.Caching.Distributed;
+using Microsoft.Extensions.Logging;
 using NewsFood.Core.Common.Extension;
 using NewsFood.Core.Common.Parameter;
 using NewsFood.Core.Interface.Cache;
@@ -7,6 +8,8 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Text.RegularExpressions;
+using System.Threading;
 using System.Threading.Tasks;
 
 namespace NewsFood.Infurstructure.Cache
@@ -14,9 +17,11 @@ namespace NewsFood.Infurstructure.Cache
     public class DistributedRedisCacheService : IDistributedRedisCacheService
     {
         private readonly IDistributedCache _distributedCache;
-        public DistributedRedisCacheService(IDistributedCache distributedCache)
+        private readonly ILogger _logger;
+        public DistributedRedisCacheService(IDistributedCache distributedCache, ILogger logger)
         {
             _distributedCache = distributedCache;
+            _logger = logger;
         }
 
         public async Task<T> Get<T>(CacheKey cacheKey)
@@ -27,22 +32,41 @@ namespace NewsFood.Infurstructure.Cache
 
         public async Task<T> GetOrCreateAsync<T>(CacheKey cacheKey, Func<Task<T>> source)
         {
-            var isExistCacheKey = await _distributedCache.GetStringAsync(cacheKey.GetStringValue());
-            if (isExistCacheKey == null)
+            //var cancellationTokenSource = new CancellationTokenSource(delay: TimeSpan.FromSeconds(2));
+            //var cancellationToken = cancellationTokenSource.Token;
+
+            var taskExistCacheKey = _distributedCache.GetStringAsync(cacheKey.GetStringValue());
+
+            var task = await Task.WhenAny(taskExistCacheKey);
+
+            if (task.IsFaulted)
             {
-                var data = await source.Invoke();
-                await _distributedCache.SetStringAsync(cacheKey.GetStringValue(), JsonConvert.SerializeObject(data));
-                return data;
+                _logger.LogInformation("Task in GetOrCreateAsync on DistributedRedisCacheService {0}", taskExistCacheKey.Status.ToString());
+                return await source.Invoke();
             }
-            return JsonConvert.DeserializeObject<T>(await _distributedCache.GetStringAsync(cacheKey.GetStringValue()));
+            else if (task.IsCanceled)
+            {
+                _logger.LogInformation("Task in GetOrCreateAsync on DistributedRedisCacheService {0}", taskExistCacheKey.Status.ToString());
+                return await source.Invoke();
+            }
+            else
+            {
+               if (task.Result == null)
+                {
+                    var data = await source.Invoke();
+                    await _distributedCache.SetStringAsync(cacheKey.GetStringValue(), JsonConvert.SerializeObject(data));
+                    return data;
+                }
+                return JsonConvert.DeserializeObject<T>(taskExistCacheKey.Result);
+            }
         }
 
         public bool Remove<T>(CacheKey cacheKey)
         {
             var task = _distributedCache.RemoveAsync(cacheKey.GetStringValue());
-            if (!task.IsCompleted)
+            if (task.IsFaulted || task.IsCanceled)
             {
-                
+                return false;
             }
             return true;
         }

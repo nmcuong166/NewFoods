@@ -62,7 +62,7 @@ namespace NewsFood.Api.Controllers
             {
                 return new JsonContentResult<List<CategoriesRespone>>(result, new BaseRespone(true));
             }
-            return new JsonContentResult<List<CategoriesRespone>>(new BaseRespone(false));
+            return new JsonContentResult<List<CategoriesRespone>>(new BaseRespone(true));
         }
     }
 }

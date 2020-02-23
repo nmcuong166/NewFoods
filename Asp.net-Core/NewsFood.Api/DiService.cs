@@ -11,6 +11,7 @@ using NewsFood.Core.Interface.Repository;
 using System.Collections.Generic;
 using NewsFood.Core.Interface.Cache;
 using NewsFood.Infurstructure.Cache;
+using Microsoft.Extensions.Logging;
 
 namespace NewsFood.Api
 {
@@ -18,9 +19,13 @@ namespace NewsFood.Api
     {
         public static IList<IServiceCollection> DIServiceExtension(this IServiceCollection services)
         {
+            var serviceProvider = services.BuildServiceProvider();
+            var logger = serviceProvider.GetService<ILogger<IDistributedRedisCacheService>>();     
+
             IList<IServiceCollection> listRegisterDI = new List<IServiceCollection>
             {
                 //Infurstructre
+                services.AddSingleton(typeof(ILogger), logger),
                 services.AddSingleton(typeof(IUnitOfWork), typeof(UnitOfWork)),
                 services.AddScoped(typeof(UserManager<AppUsers>)),
                 services.AddScoped(typeof(RoleManager<AppRoles>)),

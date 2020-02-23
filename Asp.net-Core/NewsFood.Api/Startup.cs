@@ -16,6 +16,9 @@ using System.Text;
 using NewsFood.Infurstructure.Data;
 using System.Diagnostics;
 using System.IO;
+using Microsoft.Extensions.Logging;
+using Microsoft.Extensions.Caching.StackExchangeRedis;
+using StackExchange.Redis;
 
 namespace NewsFood.Api
 {
@@ -23,11 +26,13 @@ namespace NewsFood.Api
     {
         public IConfiguration Configuration { get; }
         public IHostingEnvironment Environment { get; }
+        private ILogger<Startup> _logger;
 
-        public Startup(IConfiguration configuration, IHostingEnvironment environment)
+        public Startup(IConfiguration configuration, IHostingEnvironment environment, ILogger<Startup> logger)
         {
             Configuration = configuration;
             Environment = environment;
+            _logger = logger;
         }
 
         // This method gets called by the runtime. Use this method to add services to the container.
@@ -43,7 +48,7 @@ namespace NewsFood.Api
                 {
                     option.EnableSensitiveDataLogging();
                 }
-            },ServiceLifetime.Singleton);
+            }, ServiceLifetime.Singleton);
 
             //this services sets Identity
             services.AddIdentity<AppUsers, AppRoles>(options =>
@@ -84,7 +89,8 @@ namespace NewsFood.Api
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_2);
 
             //Register Redis Cache
-            services.AddStackExchangeRedisCache(option => {
+            services.AddStackExchangeRedisCache(option =>
+            {
                 option.Configuration = Configuration["Cache:RedisCache:Configuration"];
                 option.InstanceName = Configuration["Cache:RedisCache:InstanceName"];
             });
@@ -94,7 +100,6 @@ namespace NewsFood.Api
             {
                 c.SwaggerDoc("v1", new Info { Title = "My NewsFood", Version = "v1" });
             });
-
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -128,7 +133,7 @@ namespace NewsFood.Api
             myIdentityData.SeedAdminUser();
             myIdentityData.SeedCategories();
             app.UseMvc();
-        
+
         }
 
     }
