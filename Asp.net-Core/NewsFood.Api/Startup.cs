@@ -14,10 +14,7 @@ using Swashbuckle.AspNetCore.Swagger;
 using NewsFood.Infurstructure.Data.Mapping;
 using System.Text;
 using NewsFood.Infurstructure.Data;
-using System.Diagnostics;
-using System.IO;
 using Microsoft.Extensions.Logging;
-using Microsoft.Extensions.Caching.StackExchangeRedis;
 using StackExchange.Redis;
 
 namespace NewsFood.Api
@@ -40,10 +37,24 @@ namespace NewsFood.Api
         {
             var key = Encoding.ASCII.GetBytes("SOME_RANDOM_KEY_DO_NOT_SHARE");
 
+            //services.AddHsts(options => {
+            //    options.Preload = true;
+            //    options.IncludeSubDomains = true;
+            //    options.MaxAge = TimeSpan.FromDays(60);
+            //    options.ExcludedHosts.Add("example.com");
+            //    options.ExcludedHosts.Add("www.example.com");
+            //});
+
+            //services.AddHttpsRedirection(options =>
+            //{
+            //    options.RedirectStatusCode = StatusCodes.Status301MovedPermanently;
+            //    options.HttpsPort = 5001;
+            //});
+
             //this service sets connect database from appsettings.json
-            var optionBuilder = services.AddDbContext<ApplicationDbContext>((httpcontext, option) =>
+            var optionBuilder = services.AddDbContext<ApplicationDbContext>((option) =>
             {
-                option.UseSqlServer(Configuration["Data:NewsFood:ConnectionString"]);
+                var a = option.UseSqlServer(Configuration["Data:NewsFood:ConnectionString"]);
                 if (Environment.IsDevelopment())
                 {
                     option.EnableSensitiveDataLogging();
@@ -91,9 +102,14 @@ namespace NewsFood.Api
             //Register Redis Cache
             services.AddStackExchangeRedisCache(option =>
             {
-                option.Configuration = Configuration["Cache:RedisCache:Configuration"];
+                string conn = Configuration["Cache:RedisCache:Configuration"].ToString();
+                option.ConfigurationOptions = ConfigurationOptions.Parse(conn);
+                //option.ConfigurationOptions.AsyncTimeout = 2000;
+                //option.ConfigurationOptions.ConnectTimeout = 2000;
+                option.ConfigurationOptions.ConnectRetry = 1;
                 option.InstanceName = Configuration["Cache:RedisCache:InstanceName"];
             });
+
 
             // Register the Swagger generator, defining 1 or more Swagger documents
             services.AddSwaggerGen(c =>
@@ -105,6 +121,9 @@ namespace NewsFood.Api
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
         public void Configure(IApplicationBuilder app, IHostingEnvironment env, MyIdentityDataInitializer myIdentityData)
         {
+            //var options = new RewriteOptions().AddRedirectToHttps(301, 44334);
+            //app.UseRewriter(options);
+
             // global cors policy
             app.UseCors(x => x
                 .AllowAnyOrigin()
@@ -116,6 +135,9 @@ namespace NewsFood.Api
                 app.UseDeveloperExceptionPage();
             }
 
+            //app.UseHsts();
+            //app.UseHttpsRedirection();
+           
             app.UseAuthentication();
             app.UseSwagger();
             app.UseSwaggerUI(c =>

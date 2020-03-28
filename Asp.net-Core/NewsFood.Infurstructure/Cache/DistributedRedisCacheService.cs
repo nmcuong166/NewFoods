@@ -32,26 +32,18 @@ namespace NewsFood.Infurstructure.Cache
 
         public async Task<T> GetOrCreateAsync<T>(CacheKey cacheKey, Func<Task<T>> source)
         {
-            //var cancellationTokenSource = new CancellationTokenSource(delay: TimeSpan.FromSeconds(2));
-            //var cancellationToken = cancellationTokenSource.Token;
-
             var taskExistCacheKey = _distributedCache.GetStringAsync(cacheKey.GetStringValue());
 
-            var task = await Task.WhenAny(taskExistCacheKey);
+            await Task.WhenAny(taskExistCacheKey);
 
-            if (task.IsFaulted)
-            {
-                _logger.LogInformation("Task in GetOrCreateAsync on DistributedRedisCacheService {0}", taskExistCacheKey.Status.ToString());
-                return await source.Invoke();
-            }
-            else if (task.IsCanceled)
+            if (taskExistCacheKey.IsFaulted)
             {
                 _logger.LogInformation("Task in GetOrCreateAsync on DistributedRedisCacheService {0}", taskExistCacheKey.Status.ToString());
                 return await source.Invoke();
             }
             else
             {
-               if (task.Result == null)
+               if (taskExistCacheKey.Result == null)
                 {
                     var data = await source.Invoke();
                     await _distributedCache.SetStringAsync(cacheKey.GetStringValue(), JsonConvert.SerializeObject(data));
@@ -64,6 +56,8 @@ namespace NewsFood.Infurstructure.Cache
         public bool Remove<T>(CacheKey cacheKey)
         {
             var task = _distributedCache.RemoveAsync(cacheKey.GetStringValue());
+            task.Wait();
+
             if (task.IsFaulted || task.IsCanceled)
             {
                 return false;
