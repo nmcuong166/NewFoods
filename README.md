@@ -1,5 +1,5 @@
 # NewFoods
-The project is created by NmCuong and Phu, Lanh. The project is scraffold for buiding website and mobile for commercial, news etc... 
+The project is created by NmCuong. The project is scraffold for buiding website and mobile for commercial, news etc... 
 The technology in this project include: 
 - Backend : WebApi .net core 2.2, Entity Framework core 2.2, Sql server, JWT json token, 
 - FrontEnd: Angular 7.0
