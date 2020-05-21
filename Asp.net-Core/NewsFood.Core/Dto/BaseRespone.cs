@@ -4,7 +4,7 @@ using System.Text;
 
 namespace NewsFood.Core.Dto
 {
-    public abstract class  BaseRespone
+    public class  BaseRespone
     {
         public bool Success { get; set; }
         public IEnumerable<Error> Errors { get; set; }
@@ -12,6 +12,11 @@ namespace NewsFood.Core.Dto
         {
             Success = success;
             Errors = errors;
+        }
+
+        public BaseRespone(bool success)
+        {
+            Success = success;
         }
     }
 }

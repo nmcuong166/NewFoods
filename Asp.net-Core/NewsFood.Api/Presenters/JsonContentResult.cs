@@ -16,6 +16,22 @@ namespace NewsFood.Api.Presenters
             Handle(Data, respone);
         }
 
+        public JsonContentResult(BaseRespone respone)
+        {
+            ContentType = "application/json";
+            StatusCode = respone.Success ? StatusCodes.Status200OK : StatusCodes.Status400BadRequest;
+            var baseContent = new BaseContentRespone<T>
+            {
+                Data = default(T),
+                Sucess = respone.Success,
+                Status = respone.Success ? StatusCodes.Status200OK : StatusCodes.Status400BadRequest,
+                Errors = respone.Errors,
+                Message = HandleMessage(respone.Errors)
+            };
+
+            Content = JsonConvert.SerializeObject(baseContent);
+        }
+
         public void Handle(T Data, BaseRespone respone)
         {
             ContentType = "application/json";

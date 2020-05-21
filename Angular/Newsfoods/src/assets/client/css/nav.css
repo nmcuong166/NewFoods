@@ -1,0 +1,95 @@
+header{
+    overflow: hidden;
+    width: 100%;
+    border-bottom: 1px solid  #f2f4f8;
+    background-color: #ffffff;
+}
+
+.topnav {
+    float: left;
+    display: block;
+}
+
+.meta-data{
+    float: right;
+    display: block;
+    /* padding-right: 30px; */
+}
+
+.meta-data .meta-data-login{
+    font-size: 17px;    
+    color: #212529;
+    padding: 0 35px;
+    color: #ed3974;
+    line-height: 70px;
+}
+
+.topnav a {
+    float: left;
+    font-weight: 500;
+    padding: 0 35px;
+    line-height: 70px;
+    text-transform: uppercase;
+    font-size: 13px;
+    letter-spacing: 1px;
+    color: #212529;
+    text-decoration: none;
+}
+
+/* Change the color of links on hover */
+.topnav a:hover {
+    color: #ed3974;
+    text-decoration: none;
+}
+
+
+/* Hide the link that should open and close the topnav on small screens */
+.topnav .icon {
+    display: none;
+}
+
+@media screen and (max-width: 600px) {
+    .topnav a{
+        display: none;
+    }
+
+    .topnav{
+        width: 100%;
+    }
+
+    .topnav a.icon {
+        float: left;
+        display: block;
+        font-size: 30px;
+    }
+}
+
+@media screen and (max-width: 600px) {
+    .topnav {
+        width: 100%;
+    }
+
+    .meta-data{
+        position: absolute;
+        right: 0;
+        top: 0;
+    }
+
+    .topnav.responsive { position: relative; }
+
+    .topnav.responsive a {
+        float: none;
+        display: block;
+        text-align: left;
+        border-bottom:1px solid #f2f4f8;
+    }
+
+    .meta-data{
+        padding-right: 0;
+    }
+
+    
+}
+
+
+
