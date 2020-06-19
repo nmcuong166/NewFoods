@@ -8,35 +8,58 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.IdentityModel.Tokens;
-using NewFood.Infurstructure.Data.Entities;
-using NewFood.Infurstructure.Data.EntityFramework;
+using NewsFood.Infurstructure.Data.Entities;
+using NewsFood.Infurstructure.Data.EntityFramework;
 using Swashbuckle.AspNetCore.Swagger;
-using NewFood.Infurstructure.Data.Mapping;
+using NewsFood.Infurstructure.Data.Mapping;
 using System.Text;
-using NewFood.Infurstructure.Data;
+using NewsFood.Infurstructure.Data;
+using Microsoft.Extensions.Logging;
+using StackExchange.Redis;
 
 namespace NewsFood.Api
 {
     public class Startup
     {
-        public Startup(IConfiguration configuration)
+        public IConfiguration Configuration { get; }
+        public IHostingEnvironment Environment { get; }
+        private ILogger<Startup> _logger;
+
+        public Startup(IConfiguration configuration, IHostingEnvironment environment, ILogger<Startup> logger)
         {
             Configuration = configuration;
+            Environment = environment;
+            _logger = logger;
         }
-
-        public IConfiguration Configuration { get; }
 
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
             var key = Encoding.ASCII.GetBytes("SOME_RANDOM_KEY_DO_NOT_SHARE");
 
+            //services.AddHsts(options => {
+            //    options.Preload = true;
+            //    options.IncludeSubDomains = true;
+            //    options.MaxAge = TimeSpan.FromDays(60);
+            //    options.ExcludedHosts.Add("example.com");
+            //    options.ExcludedHosts.Add("www.example.com");
+            //});
+
+            //services.AddHttpsRedirection(options =>
+            //{
+            //    options.RedirectStatusCode = StatusCodes.Status301MovedPermanently;
+            //    options.HttpsPort = 5001;
+            //});
+
             //this service sets connect database from appsettings.json
-            services.AddDbContext<ApplicationDbContext>(option =>
+            var optionBuilder = services.AddDbContext<ApplicationDbContext>((option) =>
             {
-                option.UseSqlServer(Configuration["Data:NewsFood:ConnectionString"]);
-                option.EnableSensitiveDataLogging();
-            });
+                var a = option.UseSqlServer(Configuration["Data:NewsFood:ConnectionString"]);
+                if (Environment.IsDevelopment())
+                {
+                    option.EnableSensitiveDataLogging();
+                }
+            }, ServiceLifetime.Singleton);
 
             //this services sets Identity
             services.AddIdentity<AppUsers, AppRoles>(options =>
@@ -47,8 +70,8 @@ namespace NewsFood.Api
                 options.Password.RequireNonAlphanumeric = false;
                 options.Password.RequireUppercase = false;
             })
-                    .AddEntityFrameworkStores<ApplicationDbContext>()
-                    .AddDefaultTokenProviders();
+               .AddEntityFrameworkStores<ApplicationDbContext>()
+               .AddDefaultTokenProviders();
 
             //this services set JWT Token 
             services.AddAuthentication(x =>
@@ -76,6 +99,18 @@ namespace NewsFood.Api
 
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_2);
 
+            //Register Redis Cache
+            services.AddStackExchangeRedisCache(option =>
+            {
+                string conn = Configuration["Cache:RedisCache:Configuration"].ToString();
+                option.ConfigurationOptions = ConfigurationOptions.Parse(conn);
+                //option.ConfigurationOptions.AsyncTimeout = 2000;
+                //option.ConfigurationOptions.ConnectTimeout = 2000;
+                option.ConfigurationOptions.ConnectRetry = 1;
+                option.InstanceName = Configuration["Cache:RedisCache:InstanceName"];
+            });
+
+
             // Register the Swagger generator, defining 1 or more Swagger documents
             services.AddSwaggerGen(c =>
             {
@@ -86,6 +121,9 @@ namespace NewsFood.Api
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
         public void Configure(IApplicationBuilder app, IHostingEnvironment env, MyIdentityDataInitializer myIdentityData)
         {
+            //var options = new RewriteOptions().AddRedirectToHttps(301, 44334);
+            //app.UseRewriter(options);
+
             // global cors policy
             app.UseCors(x => x
                 .AllowAnyOrigin()
@@ -97,6 +135,9 @@ namespace NewsFood.Api
                 app.UseDeveloperExceptionPage();
             }
 
+            //app.UseHsts();
+            //app.UseHttpsRedirection();
+           
             app.UseAuthentication();
             app.UseSwagger();
             app.UseSwaggerUI(c =>
@@ -112,7 +153,9 @@ namespace NewsFood.Api
                 routes.MapRoute("default", "{controller=Home}/{action=Index}/{id?}");
             });
             myIdentityData.SeedAdminUser();
+            myIdentityData.SeedCategories();
             app.UseMvc();
+
         }
 
     }
