@@ -52,9 +52,18 @@ namespace NewsFood.Api
             //});
 
             //this service sets connect database from appsettings.json
+            //var optionBuilder = services.AddDbContext<ApplicationDbContext>((option) =>
+            //{
+            //    var a = option.UseSqlServer(Configuration["Data:NewsFood:ConnectionString"]);
+            //    if (Environment.IsDevelopment())
+            //    {
+            //        option.EnableSensitiveDataLogging();
+            //    }
+            //}, ServiceLifetime.Singleton);
+
             var optionBuilder = services.AddDbContext<ApplicationDbContext>((option) =>
             {
-                var a = option.UseSqlServer(Configuration["Data:NewsFood:ConnectionString"]);
+                var a = option.UseMySql(Configuration["Data:NewsFood:MySQLConnectionString"]);
                 if (Environment.IsDevelopment())
                 {
                     option.EnableSensitiveDataLogging();
